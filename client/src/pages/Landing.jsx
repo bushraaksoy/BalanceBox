@@ -76,7 +76,7 @@ const Landing = () => {
                         'linear-gradient(to bottom, transparent 0, black 72px, black calc(100% - 72px), transparent 100%)',
                 }}
             />
-            <header className="sticky top-0 z-10 flex items-center justify-between px-6 sm:px-10 h-16 bg-[#f4f3f0]/80 backdrop-blur border-b border-stone-200/80">
+            <header className="sticky top-0 z-10 flex items-center justify-between px-6 sm:px-10 min-h-16 pt-[env(safe-area-inset-top)] bg-[#f4f3f0]/80 backdrop-blur border-b border-stone-200/80">
                 <FullLogo />
                 <Link to="/login" className="text-sm font-medium">
                     Login

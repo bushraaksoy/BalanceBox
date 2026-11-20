@@ -5,7 +5,7 @@ import BackButton from '../buttons/BackButton';
 
 const SubpageAppBar = ({ title }) => {
     return (
-        <div className="border-b border-stone-300 h-[55px] py-3 px-5 flex justify-between items-center bg-white | top-0 fixed right-0 w-full">
+        <div className="border-b border-stone-300 h-[55px] py-3 px-5 flex justify-between items-center bg-white | top-[env(safe-area-inset-top)] fixed right-0 w-full">
             <BackButton />
             <h1 className="text-lg font-medium">{title}</h1>
             <NavIcon>

@@ -1,9 +1,13 @@
 @import url('./assets/fonts/fonts.css');
 @import 'tailwindcss';
 
+html,
+body {
+    background: #ffffff;
+}
+
 body {
     margin: 0;
-    background: #f9fafb;
 }
 
 #root {
@@ -24,15 +28,24 @@ body {
     border-radius: 0;
     overflow: hidden;
     transform: translateZ(0);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top);
+    background-color: #ffffff;
     font-family: 'Poppins', Arial;
 }
 
 @media (min-width: 768px) {
+    body {
+        background: #f9fafb;
+    }
+
     .app {
         width: 390px;
         height: 844px;
         margin: max(24px, calc((100vh - 844px) / 2)) auto;
         border-radius: 25px;
+        padding-top: 0;
+        background-color: #f9fafb;
     }
 }
 
