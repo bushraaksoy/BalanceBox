@@ -1,18 +1,27 @@
-import React from 'react';
+import { Link } from 'react-router';
+import { IoChevronForward } from 'react-icons/io5';
 import UserAvatar from './UserAvatar';
-import UserInformation from './UserInformation';
-import { BiEditAlt } from 'react-icons/bi';
-import NavIcon from '../NavIcon';
 
 const UserProfileCard = ({ profile }) => {
+    const name = profile?.fullname || profile?.username;
+    const username = profile?.username;
+
     return (
-        <div className="flex flex-col gap-3 items-center bg-white border border-gray-200 rounded-xl py-2 pb-8 relative">
-            <NavIcon to="/edit-profile">
-                <BiEditAlt size={22} className="absolute top-5 right-5" />
-            </NavIcon>
-            <UserAvatar name={profile?.fullname || profile?.username} />
-            <UserInformation profile={profile} />
-        </div>
+        <Link
+            to="/edit-profile"
+            className="flex items-center gap-3 bg-gray-50 rounded-2xl px-4 py-3 border border-gray-200"
+        >
+            <UserAvatar name={name} size="sm" />
+            <div className="flex flex-col min-w-0 flex-1">
+                <span className="font-medium truncate">{name}</span>
+                {profile?.fullname && username && (
+                    <span className="text-sm text-gray-500 truncate">
+                        {username}
+                    </span>
+                )}
+            </div>
+            <IoChevronForward className="text-gray-400 shrink-0" size={18} />
+        </Link>
     );
 };
 

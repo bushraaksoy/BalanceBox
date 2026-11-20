@@ -11,8 +11,14 @@ const AuthLayout = ({
     linkTo,
 }) => {
     return (
-        <div className="height-full px-7 py-10 flex flex-col gap-10 text-center">
-            <Logo width="150px" height="150px" className="mx-auto" />
+        <div className="app bg-gray-50 px-7 py-10 flex flex-col gap-10 text-center">
+            <Link
+                to="/"
+                aria-label="Back to BalanceBox"
+                className="self-center"
+            >
+                <Logo width="150px" height="150px" />
+            </Link>
             <div>
                 <h1 className="font-bold text-lg">{title}</h1>
                 <p className="text-sm text-gray-600">{subtitle}</p>

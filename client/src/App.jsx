@@ -10,9 +10,7 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <Toaster richColors position="top-center" />
-            <div className="app bg-gray-50">
-                <RouterProvider router={router} />
-            </div>
+            <RouterProvider router={router} />
         </QueryClientProvider>
     );
 }

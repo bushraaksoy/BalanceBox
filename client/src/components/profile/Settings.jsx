@@ -5,16 +5,15 @@ import { MdSecurity } from 'react-icons/md';
 
 const Settings = () => {
     return (
-        <div className="settings p-2 border-b border-gray-200">
-            <h1 className="text-lg font-semibold py-2">Account Setting</h1>
-            <SettingsItem title="General" icon={<IoSettings size={20} />} />
+        <div className="settings bg-gray-50 rounded-2xl px-3 border border-gray-200 divide-y divide-gray-200">
+            <SettingsItem title="General" icon={<IoSettings size={16} />} />
             <SettingsItem
                 title="Notifications"
-                icon={<IoNotifications size={20} />}
+                icon={<IoNotifications size={16} />}
             />
             <SettingsItem
                 title="Your data in BalanceBox"
-                icon={<MdSecurity size={20} />}
+                icon={<MdSecurity size={16} />}
             />
         </div>
     );

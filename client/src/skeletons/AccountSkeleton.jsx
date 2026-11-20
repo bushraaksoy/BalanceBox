@@ -1,19 +1,17 @@
 import React from 'react';
-import MainLayout from '../layouts/MainLayout';
+import SecondaryLayout from '../layouts/SecondaryLayout';
 import SignOutBtn from '../components/buttons/SignOutBtn';
 import Settings from '../components/profile/Settings';
 
 const AccountSkeleton = () => {
     return (
-        <MainLayout>
-            <div className="flex flex-col gap-5">
-                <div className="flex flex-col gap-3 items-center bg-white border border-gray-200 rounded-xl h-96 glow py-2 mb-10 relative">
-                    <div className="w-full px-5 pb-6 flex flex-col gap-10"></div>
-                </div>
+        <SecondaryLayout heading="Account">
+            <div className="flex flex-col gap-4 px-4 pb-4 bg-white min-h-full">
+                <div className="bg-gray-50 border border-gray-200 rounded-2xl h-16 glow"></div>
+                <Settings />
+                <SignOutBtn />
             </div>
-            <Settings />
-            <SignOutBtn />
-        </MainLayout>
+        </SecondaryLayout>
     );
 };
 

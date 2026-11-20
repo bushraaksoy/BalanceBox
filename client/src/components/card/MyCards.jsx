@@ -25,7 +25,7 @@ const MyCards = () => {
     }
 
     return (
-        <div className="cards  border-gray-200 pb-8">
+        <div className="cards border border-gray-200 p-4 bg-gray-50 rounded-2xl">
             <div className="flex justify-between py-2">
                 <SubHeading>My Cards</SubHeading>
                 {cards?.length > 0 && (

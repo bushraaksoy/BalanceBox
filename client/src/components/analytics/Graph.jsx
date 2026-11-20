@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import {
-    Legend,
-    Tooltip,
-    YAxis,
-    XAxis,
-    CartesianGrid,
     Area,
     AreaChart,
+    CartesianGrid,
+    Legend,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
 } from 'recharts';
 import { useAuthContext } from '../../context/AuthContext';
 import { getAnalyticsTransactions } from '../../services/analyticsService';
@@ -22,17 +22,23 @@ const Graph = () => {
     });
 
     return (
-        <AreaChart
-            className="text-xs p-2"
-            width={350}
-            height={250}
-            data={transactions}
-        >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
+        <div className="h-64 text-xs">
+        <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={transactions}>
+            <CartesianGrid stroke="#e7e5e4" strokeDasharray="3 3" />
+            <XAxis
+                dataKey="date"
+                tick={{ fill: '#78716c', fontSize: 11 }}
+                axisLine={{ stroke: '#e7e5e4' }}
+                tickLine={false}
+            />
 
             <Tooltip
-                stroke="#000000"
+                contentStyle={{
+                    borderRadius: 12,
+                    border: '1px solid #e7e5e4',
+                    fontSize: 12,
+                }}
                 formatter={(value, name) => [
                     name == 'amount' && (
                         <>
@@ -47,13 +53,15 @@ const Graph = () => {
                 dot={false}
                 type="monotone"
                 dataKey="amount"
-                stroke="#003f5c"
-                fill="#003f5c"
-                fillOpacity={0.4}
+                stroke="#efb100"
+                fill="#efb100"
+                fillOpacity={0.28}
                 strokeWidth={2}
                 isAnimationActive={false}
             />
         </AreaChart>
+        </ResponsiveContainer>
+        </div>
     );
 };
 

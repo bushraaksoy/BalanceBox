@@ -1,15 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
+import {
+    Cell,
+    Legend,
+    Pie,
+    PieChart,
+    ResponsiveContainer,
+    Tooltip,
+} from 'recharts';
 import { getTransactionSummary } from '../../services/analyticsService';
 import { useAuthContext } from '../../context/AuthContext';
 
 const AnalyticsPieChart = () => {
     const { userId } = useAuthContext();
-    const COLORS = ['#003f5c', '#58508d', '#ff6361'];
-    // const COLORS = ['#55a1ff', '#ef6356', '#ffc861']; // similar to icon
-    // const COLORS = ['#b5a03d', '#6a6239', '#f7bd03']; // olive green palete
-    // const COLORS = ['#00aaff', '#ef6356', '#00cc00']; // red green blue
+    const COLORS = ['#efb100', '#44403c', '#a8a29e'];
 
     const { data: rawData, isLoading } = useQuery({
         queryKey: ['transactionSummary'],
@@ -18,15 +22,16 @@ const AnalyticsPieChart = () => {
 
     const data = rawData
         ? [
-              { name: 'INCOME', value: rawData.totalIncome },
-              { name: 'EXPENSE', value: rawData.totalSpending },
-              { name: 'SAVING', value: rawData.totalSaving },
+              { name: 'Income', value: rawData.totalIncome },
+              { name: 'Expenses', value: rawData.totalSpending },
+              { name: 'Savings', value: rawData.totalSaving },
           ]
         : [];
 
     return (
-        <div className="py-6">
-            <PieChart width={350} height={100} className="flex">
+        <div className="h-32">
+            <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
                 <Pie
                     data={data}
                     dataKey="value"
@@ -34,7 +39,7 @@ const AnalyticsPieChart = () => {
                     cx="50%"
                     cy="50%"
                     outerRadius={50}
-                    fill="#8884d8"
+                    fill="#efb100"
                     stroke="none"
                 >
                     {data?.map((entry, index) => (
@@ -48,9 +53,10 @@ const AnalyticsPieChart = () => {
                 <Legend
                     layout="vertical"
                     align="right"
-                    verticalAlign="center"
+                    verticalAlign="middle"
                 />
             </PieChart>
+            </ResponsiveContainer>
         </div>
     );
 };

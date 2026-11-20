@@ -28,12 +28,12 @@ const MyIncomes = () => {
     }
 
     return (
-        <div className="incomes  border-gray-200 pb-8">
-            <div className="flex justify-between py-2">
-                <SubHeading>My Incomes</SubHeading>
-                <AddIncomeDrawer trigger={<FiPlusCircle size={25} />} />
+        <div className="incomes border border-gray-200 rounded-2xl p-3 bg-gray-50">
+            <div className="flex justify-between items-center">
+                <SubHeading className="!py-1 !text-sm">My Incomes</SubHeading>
+                <AddIncomeDrawer trigger={<FiPlusCircle size={22} />} />
             </div>
-            <div className="income-cards flex-col w-90 flex gap-3 overflow-scroll ">
+            <div className="income-cards flex-col flex gap-1 overflow-scroll ">
                 {incomes.length > 0 ? (
                     incomes
                         .slice()

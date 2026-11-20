@@ -6,7 +6,7 @@ const EditProfileBtn = () => {
     return (
         <button
             type="submit"
-            className="py-3 px-5 mt-auto bg-yellow-500 rounded-3xl font-semibold flex items-center justify-center gap-1 | transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 active:bg-yellow-400"
+            className="w-full py-3.5 bg-yellow-500 rounded-2xl font-semibold flex items-center justify-center gap-1"
         >
             <MdModeEdit /> Edit
         </button>

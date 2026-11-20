@@ -1,28 +1,32 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Home from '../pages/Home/Home';
-import Savings from '../pages/Savings/Savings';
-import Login from '../pages/Login/Login';
-import Analytics from '../pages/Analytics/Analytics';
-import Profile from '../pages/Profile/Profile';
-import Register from '../pages/Register/Register';
+import Home from '../pages/Home';
+import Landing from '../pages/Landing';
+import { useAuthContext } from '../context/AuthContext';
+import Savings from '../pages/Savings';
+import Login from '../pages/Login';
+import Analytics from '../pages/Analytics';
+import Profile from '../pages/Profile';
+import Register from '../pages/Register';
 import ProtectedRoute from './ProtectedRoute';
-import BudgetPlanner from '../pages/BudgetPlanner/BudgetPlanner';
-import Notifications from '../pages/Notifications/Notifications';
-import EditProfile from '../pages/EditProfile/EditProfile';
-import Activity from '../pages/Activity/Activity';
-import Incomes from '../pages/Incomes/Incomes';
-import Expenses from '../pages/Expenses/Expenses';
-import Transactions from '../pages/Transactions/Transactions';
-import Chat from '../pages/Chat/Chat';
+import BudgetPlanner from '../pages/BudgetPlanner';
+import Notifications from '../pages/Notifications';
+import EditProfile from '../pages/EditProfile';
+import Activity from '../pages/Activity';
+import Incomes from '../pages/Incomes';
+import Expenses from '../pages/Expenses';
+import Transactions from '../pages/Transactions';
+import Chat from '../pages/Chat';
+
+const RootPage = () => {
+    const { userId } = useAuthContext();
+    if (!userId || userId === 'null') return <Landing />;
+    return <Home />;
+};
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: (
-            <ProtectedRoute>
-                <Home />
-            </ProtectedRoute>
-        ),
+        element: <RootPage />,
     },
     { path: '/register', element: <Register /> },
     { path: '/login', element: <Login /> },

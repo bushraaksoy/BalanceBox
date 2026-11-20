@@ -5,13 +5,13 @@ import Amount from '../ui/Amount';
 
 const BudgetingIncomeCard = ({ amount, title, card }) => {
     return (
-        <div className="expense-item w-full rounded-2xl py-3 flex justify-between">
+        <div className="expense-item w-full rounded-xl py-1.5 flex justify-between items-center text-sm">
             <div className="flex gap-2 items-center">
-                <div className="p-2 bg-gray-200 rounded-lg">
-                    <LuArrowDownLeft size={20} />
+                <div className="p-1.5 bg-gray-200 rounded-md">
+                    <LuArrowDownLeft size={16} />
                 </div>
                 <div className="flex flex-col justify-center">
-                    <h3 className="font-medium">{title}</h3>
+                    <h3 className="font-medium leading-5">{title}</h3>
                     <span className="text-xs text-gray-500">{card}</span>
                 </div>
             </div>
