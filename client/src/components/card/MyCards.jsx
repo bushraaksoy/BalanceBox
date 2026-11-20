@@ -25,11 +25,11 @@ const MyCards = () => {
     }
 
     return (
-        <div className="cards border border-gray-200 p-4 bg-gray-50 rounded-2xl">
-            <div className="flex justify-between py-2">
-                <SubHeading>My Cards</SubHeading>
+        <div className="cards border border-gray-200 rounded-2xl p-3 ">
+            <div className="flex justify-between items-center">
+                <SubHeading className="!py-1 !text-sm">My Cards</SubHeading>
                 {cards?.length > 0 && (
-                    <AddCardDrawer trigger={<FiPlusCircle size={25} />} />
+                    <AddCardDrawer trigger={<FiPlusCircle size={22} />} />
                 )}
             </div>
             <div className="flex gap-4 overflow-x-scroll">

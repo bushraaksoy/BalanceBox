@@ -41,7 +41,7 @@ const BudgetRemainder = () => {
         return <BudgetRemainderSkeleton />;
     }
     return (
-        <div className="budget-leftover flex justify-between border border-gray-200 rounded-2xl p-4 bg-gray-50">
+        <div className="budget-leftover flex justify-between border border-gray-200 rounded-2xl p-4 ">
             <h1 className="font-medium">Amount left to budget:</h1>
             <div className="text-center font-semibold text-lg">
                 <Currency /> <Amount amount={budgetRemainder.budgetRemainder} />

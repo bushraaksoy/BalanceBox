@@ -28,7 +28,7 @@ const MyIncomes = () => {
     }
 
     return (
-        <div className="incomes border border-gray-200 rounded-2xl p-3 bg-gray-50">
+        <div className="incomes border border-gray-200 rounded-2xl p-3 ">
             <div className="flex justify-between items-center">
                 <SubHeading className="!py-1 !text-sm">My Incomes</SubHeading>
                 <AddIncomeDrawer trigger={<FiPlusCircle size={22} />} />

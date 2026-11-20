@@ -24,7 +24,7 @@ const MyExpenses = () => {
     }
 
     return (
-        <div className="expenses border border-gray-200 bg-gray-50 rounded-2xl p-3">
+        <div className="expenses border border-gray-200  rounded-2xl p-3">
             <div className="flex justify-between items-center">
                 <SubHeading className="!py-1 !text-sm">My Expenses</SubHeading>
                 <AddExpenseDrawer trigger={<FiPlusCircle size={22} />} />

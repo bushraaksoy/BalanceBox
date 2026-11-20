@@ -18,13 +18,22 @@ body {
 }
 
 .app {
-    width: 390px;
-    height: 844px;
-    margin: max(24px, calc((100vh - 844px) / 2)) auto;
-    border-radius: 25px;
+    width: 100%;
+    height: 100dvh;
+    margin: 0;
+    border-radius: 0;
     overflow: hidden;
     transform: translateZ(0);
     font-family: 'Poppins', Arial;
+}
+
+@media (min-width: 768px) {
+    .app {
+        width: 390px;
+        height: 844px;
+        margin: max(24px, calc((100vh - 844px) / 2)) auto;
+        border-radius: 25px;
+    }
 }
 
 .text-2xs {
