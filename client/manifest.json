@@ -1,0 +1,22 @@
+{
+    "name": "Balance Box",
+    "short_name": "BalanceBox",
+    "start_url": "/",
+    "display": "standalone",
+    "display_override": ["standalone", "minimal_ui"],
+    "display_mode": "standalone",
+    "background_color": "white",
+    "theme_color": "#ffffff",
+    "icons": [
+        {
+            "src": "/logo2.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/logo2.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
