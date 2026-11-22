@@ -1,8 +1,10 @@
 import React from 'react';
 import SubpageAppBar from '../components/appBars/SubpageAppBar';
 import chatBg from '../assets/images/chatbg.png';
+import useStatusBar from '../hooks/useStatusBar';
 
 const ChatLayout = ({ children, heading }) => {
+    useStatusBar('bar');
     return (
         <div className="app bg-gray-50">
             <div className="flex h-full min-h-0 flex-col">

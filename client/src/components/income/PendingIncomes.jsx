@@ -1,18 +1,24 @@
-import React from 'react';
-import PendingIncomesItem from './PendingIncomesItem';
-import SubHeading from '../ui/SubHeading';
+import { useState } from 'react';
+import PendingIncomesItem, { isIncomeLater } from './PendingIncomesItem';
 
 const PendingIncomes = ({ pendingIncomes }) => {
+    const [hidden, setHidden] = useState(() =>
+        new Set(pendingIncomes.filter((income) => isIncomeLater(income.id)).map((income) => income.id))
+    );
+    const visible = pendingIncomes.filter((income) => !hidden.has(income.id));
+
+    if (!visible.length) return null;
+
     return (
-        <div className="incomes border-gray-200 py-4">
-            <h1 className="p-4 font-medium">
-                Have you recieved these incomes?
-            </h1>
-            <div className="pending-incomes flex flex-col gap-1 px-4">
-                {pendingIncomes?.map((income) => (
-                    <PendingIncomesItem key={income.id} income={income} />
-                ))}
-            </div>
+        <div className="flex flex-col gap-3">
+            <h2 className="text-sm font-medium">Have you received these incomes?</h2>
+            {visible.map((income) => (
+                <PendingIncomesItem
+                    key={income.id}
+                    income={income}
+                    onLater={(id) => setHidden((current) => new Set(current).add(id))}
+                />
+            ))}
         </div>
     );
 };

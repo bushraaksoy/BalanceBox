@@ -1,8 +1,10 @@
 import React from 'react';
 import BottomNavBar from '../components/appBars/BottomNavBar';
 import Heading from '../components/ui/Heading';
+import useStatusBar from '../hooks/useStatusBar';
 
 const SecondaryLayout = ({ children, heading, contentClassName = 'bg-white' }) => {
+    useStatusBar(contentClassName.includes('F8F9FB') ? 'page' : 'bar');
     return (
         <div className="app bg-gray-50">
             <div className="relative flex h-full min-h-0 flex-col">

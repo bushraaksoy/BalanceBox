@@ -1,8 +1,10 @@
 import React from 'react';
 import BottomNavBar from '../components/appBars/BottomNavBar';
 import TopAppBar from '../components/appBars/TopAppBar';
+import useStatusBar from '../hooks/useStatusBar';
 
 const MainLayout = ({ children }) => {
+    useStatusBar('bar');
     return (
         <div className="app bg-gray-50">
             <div className="relative flex h-full min-h-0 flex-col">

@@ -22,19 +22,16 @@ const ExpenseDetails = ({ trigger, expense }) => {
 
     const { mutate: editExpenseMutation, isEditLoading } = useMutation({
         mutationFn: () => editExpense(userId, expense.id, formData),
-        onSuccess: (data) => {
-            console.log('Expense updated successfully!', data);
+        onSuccess: () => {
             toast.success('Expense Updated!');
-            queryClient.invalidateQueries([
-                'expenses',
-                'balanceOverview',
-                'budgetRemainder',
-            ]);
+            queryClient.invalidateQueries({ queryKey: ['expenses'] });
+            queryClient.invalidateQueries({ queryKey: ['expenseCategory'] });
+            queryClient.invalidateQueries({ queryKey: ['balanceOverview'] });
+            queryClient.invalidateQueries({ queryKey: ['budgetRemainder'] });
             setIsOpen(false);
         },
         onError: (error) => {
-            console.log('Error updating expense.', error);
-            toast.error('Failed to update');
+            toast.error(error.message || 'Failed to update');
         },
     });
 

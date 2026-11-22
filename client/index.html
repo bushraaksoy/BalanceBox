@@ -20,8 +20,29 @@
                     (theme === 'system' &&
                         window.matchMedia('(prefers-color-scheme: dark)').matches);
                 document.documentElement.classList.toggle('dark', dark);
+                var path = location.pathname;
+                var userId = localStorage.getItem('userId');
+                var guest = !userId || userId === 'null';
+                var grey = /^\/(activity|analytics|budgeting|account)\/?$/.test(path);
+                var auth = /^\/(login|register)\/?$/.test(path);
+                var color = grey
+                    ? dark
+                        ? '#111113'
+                        : '#F8F9FB'
+                    : auth
+                      ? dark
+                          ? '#111113'
+                          : '#f9fafb'
+                      : path === '/' && guest
+                        ? dark
+                            ? '#111113'
+                            : '#f4f3f0'
+                        : dark
+                          ? '#1c1c1e'
+                          : '#ffffff';
+                document.documentElement.style.setProperty('--status-bar', color);
                 var meta = document.querySelector('meta[name="theme-color"]');
-                if (meta) meta.setAttribute('content', dark ? '#111113' : '#ffffff');
+                if (meta) meta.setAttribute('content', color);
             })();
         </script>
         <meta name="mobile-web-app-capable" content="yes" />

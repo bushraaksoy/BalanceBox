@@ -192,6 +192,14 @@ html:has(.app) #root {
     background-color: #111113;
 }
 
+@media (max-width: 767px) {
+    .app,
+    .dark .app,
+    .dark .app.bg-gray-50 {
+        background-color: var(--status-bar, #ffffff);
+    }
+}
+
 .dark .bg-gray-50\/90 {
     background-color: rgb(17 17 19 / 0.9);
 }

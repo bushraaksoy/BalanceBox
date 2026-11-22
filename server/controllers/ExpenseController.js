@@ -97,9 +97,19 @@ class ExpenseController {
             const userId = req.userId;
             const { expenseId } = req.params;
             const data = req.body;
+            const amount = Number(String(data.amount ?? '').replace(/,/g, ''));
+            if (!Number.isFinite(amount) || amount < 0) {
+                return res.status(400).send({ message: 'Enter a valid amount.' });
+            }
             const expense = await prisma.expense.update({
                 where: { id: +expenseId, userId },
-                data,
+                data: {
+                    title: data.title,
+                    description: data.description ?? '',
+                    amount,
+                    frequency: data.frequency || null,
+                    category: data.category || null,
+                },
             });
             res.status(200).send({
                 message: 'Expense updated successfully!',

@@ -16,7 +16,7 @@ const BudgetingExpenseItem = ({ category, title, amount, frequency }) => {
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F3F4F6] text-[#171717] [&_img]:h-4 [&_img]:w-4 [&_svg]:h-4 [&_svg]:w-4">
                     {expenseCategoryIcons[category]}
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 text-left">
                     <h3 className="truncate font-medium leading-5 text-[#171717]">
                         {title}
                     </h3>

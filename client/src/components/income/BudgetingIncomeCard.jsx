@@ -16,7 +16,7 @@ const BudgetingIncomeCard = ({ amount, title, category, frequency }) => {
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
                     <LuArrowDownLeft size={16} />
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 text-left">
                     <h3 className="truncate font-medium leading-5 text-[#171717]">
                         {title}
                     </h3>

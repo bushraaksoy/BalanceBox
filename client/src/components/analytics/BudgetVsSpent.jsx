@@ -13,6 +13,8 @@ import { useAuthContext } from '../../context/AuthContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { getExpenseCategory } from '../../services/expenseService';
 import { chartColors } from './chartColors';
+import { formatAmount } from '../../utils/formatAmount';
+import ChartEmpty from './ChartEmpty';
 
 const BudgetVsSpent = () => {
     const { userId } = useAuthContext();
@@ -34,9 +36,9 @@ const BudgetVsSpent = () => {
 
     if (rows.length === 0) {
         return (
-            <p className="py-8 text-center text-sm text-[#737987]">
+            <ChartEmpty>
                 Add a budget to compare it with what you spend.
-            </p>
+            </ChartEmpty>
         );
     }
 
@@ -83,7 +85,7 @@ const BudgetVsSpent = () => {
                             fontSize: 12,
                         }}
                         formatter={(value, name) => [
-                            `${symbol} ${Number(value).toLocaleString()}`,
+                            `${symbol} ${formatAmount(value)}`,
                             name,
                         ]}
                     />

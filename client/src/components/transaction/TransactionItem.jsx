@@ -1,5 +1,6 @@
 import React from 'react';
 import Currency from '../Currency';
+import { formatAmount } from '../../utils/formatAmount';
 
 const TransactionItem = ({ transaction }) => {
     return (
@@ -29,7 +30,7 @@ const TransactionItem = ({ transaction }) => {
                     }
                 >
                     {transaction.type == 'INCOME' ? '+ ' : '- '}
-                    <Currency /> {Number(transaction.amount).toLocaleString()}
+                    <Currency /> {formatAmount(transaction.amount)}
                 </div>
                 <div className="text-xs text-gray-500 ">
                     {transaction.card?.title}

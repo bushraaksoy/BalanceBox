@@ -12,24 +12,46 @@ import { getTransactionSummary } from '../../services/analyticsService';
 import { useAuthContext } from '../../context/AuthContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { chartColors } from './chartColors';
+import { formatAmount } from '../../utils/formatAmount';
+import ChartEmpty from './ChartEmpty';
 
 const AnalyticsPieChart = () => {
     const { userId } = useAuthContext();
-    const { isDark } = usePreferences();
-    const COLORS = [chartColors.income, chartColors.expense, chartColors.saving];
-
+    const { isDark, symbol } = usePreferences();
     const { data: rawData, isLoading } = useQuery({
         queryKey: ['transactionSummary'],
         queryFn: () => getTransactionSummary(userId),
     });
 
-    const data = rawData
-        ? [
-              { name: 'Income', value: rawData.totalIncome },
-              { name: 'Expenses', value: rawData.totalSpending },
-              { name: 'Savings', value: rawData.totalSaving },
-          ]
-        : [];
+    const data = [
+        {
+            name: 'Income',
+            value: Number(rawData?.totalIncome) || 0,
+            fill: chartColors.income,
+        },
+        {
+            name: 'Expenses',
+            value: Number(rawData?.totalSpending) || 0,
+            fill: chartColors.expense,
+        },
+        {
+            name: 'Savings',
+            value: Number(rawData?.totalSaving) || 0,
+            fill: chartColors.saving,
+        },
+    ].filter((slice) => slice.value > 0);
+
+    if (isLoading) {
+        return <div className="h-32 animate-pulse rounded-xl bg-[#F3F4F6]" />;
+    }
+
+    if (!data.length) {
+        return (
+            <ChartEmpty>
+                Log income or an expense to see how they compare.
+            </ChartEmpty>
+        );
+    }
 
     return (
         <div className="h-32">
@@ -45,11 +67,8 @@ const AnalyticsPieChart = () => {
                     fill={chartColors.income}
                     stroke="none"
                 >
-                    {data?.map((entry, index) => (
-                        <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                        />
+                    {data.map((entry) => (
+                        <Cell key={entry.name} fill={entry.fill} />
                     ))}
                 </Pie>
                 <Tooltip
@@ -60,6 +79,10 @@ const AnalyticsPieChart = () => {
                         color: isDark ? '#f4f4f5' : '#171717',
                         fontSize: 12,
                     }}
+                    formatter={(value, name) => [
+                        `${symbol} ${formatAmount(value)}`,
+                        name,
+                    ]}
                 />
                 <Legend
                     iconType="circle"

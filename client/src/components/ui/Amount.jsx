@@ -1,7 +1,7 @@
-import React from 'react';
+import { formatAmount } from '../../utils/formatAmount';
 
 const Amount = ({ amount }) => {
-    return <div className="inline">{amount?.toLocaleString()}</div>;
+    return <span>{formatAmount(amount)}</span>;
 };
 
 export default Amount;

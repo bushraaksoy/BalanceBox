@@ -16,7 +16,7 @@ import { CiClock2, CiCreditCard1, CiMoneyBill } from 'react-icons/ci';
 import { FiClock } from 'react-icons/fi';
 import { TbCategory, TbCategoryFilled } from 'react-icons/tb';
 
-const IncomeDetails = ({ trigger, income }) => {
+const IncomeDetails = ({ trigger, income, triggerClassName }) => {
     const { userId } = useAuthContext();
     const [formData, setFormData] = useState(income);
     const [isOpen, setIsOpen] = useState(false);
@@ -38,6 +38,7 @@ const IncomeDetails = ({ trigger, income }) => {
                 'budgetRemainder',
                 'cards',
             ]);
+            queryClient.invalidateQueries({ queryKey: ['pendingIncomes'] });
             setIsOpen(false);
         },
         onError: (error) => {
@@ -87,6 +88,7 @@ const IncomeDetails = ({ trigger, income }) => {
             setIsOpen={setIsOpen}
             title={income.title}
             trigger={trigger}
+            triggerClassName={triggerClassName}
         >
             <div className="content py-3 flex flex-col gap-3">
                 <form action="" className="py-3 flex flex-col gap-3">

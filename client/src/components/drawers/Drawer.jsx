@@ -11,17 +11,18 @@ export default function VaulDrawer({
     children,
     isOpen,
     setIsOpen,
+    triggerClassName = 'outline-none',
 }) {
     // const [isOpen, setIsOpen] = useState(false);
 
     return (
         <Drawer.Root open={isOpen} onOpenChange={setIsOpen}>
-            <Drawer.Trigger className="outline-none">{trigger}</Drawer.Trigger>
+            <Drawer.Trigger className={triggerClassName}>{trigger}</Drawer.Trigger>
             <Drawer.Portal>
                 <Drawer.Overlay className="fixed inset-0 bg-black/20" />
                 <Drawer.Content className=" bg-white content fixed bottom-0 left-0 right-0 outline-none rounded-t-3xl px-5 pb-8 ">
                     <Drawer.Title className="pt-7 pb-3 font-semibold text-xl border-gray-200 border-b flex items-center justify-between">
-                        <h1 className="">{title}</h1>
+                        <span>{title}</span>
                         <IoClose
                             onClick={() => {
                                 setIsOpen(false);

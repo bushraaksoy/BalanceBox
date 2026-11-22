@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import FullLogo from '../components/FullLogo';
 import { trackEvent } from '../services/statsService';
+import useStatusBar from '../hooks/useStatusBar';
 
 const points = [
     {
@@ -42,6 +43,7 @@ const installSteps = () => {
 };
 
 const Landing = () => {
+    useStatusBar('landing');
     const [installOpen, setInstallOpen] = useState(false);
     const [steps, setSteps] = useState([]);
 

@@ -2,7 +2,7 @@ import { usePreferences } from '../context/PreferencesContext';
 
 const Currency = () => {
     const { symbol } = usePreferences();
-    return <div className="inline"> {symbol} </div>;
+    return <span> {symbol} </span>;
 };
 
 export default Currency;

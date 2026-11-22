@@ -10,8 +10,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { getCards } from '../../services/cardService';
 import ButtonLoader from '../ButtonLoader';
-import Currency from '../Currency';
 import { IoChevronDown, IoClose } from 'react-icons/io5';
+import { formatAmount, formatTypedAmount } from '../../utils/formatAmount';
 
 const fieldClass =
     'w-full rounded-xl border border-[#E8E9ED] bg-[#F8F9FB] px-3 py-2.5 text-sm text-[#171717] outline-none';
@@ -71,13 +71,7 @@ const AddTransactionPopup = ({ visible, setVisible, expense }) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        const nextValue =
-            name === 'amount'
-                ? value
-                      .replace(/[^\d.]/g, '')
-                      .replace(/^(\d*\.?\d{0,2}).*$/, '$1')
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                : value;
+        const nextValue = name === 'amount' ? formatTypedAmount(value) : value;
         setFormData({ ...formData, [name]: nextValue });
         setError('');
     };
@@ -139,12 +133,10 @@ const AddTransactionPopup = ({ visible, setVisible, expense }) => {
                 <div className="flex flex-col gap-3">
                     <label className="block">
                         <span className="text-xs text-[#737987]">Amount</span>
-                        <div className="relative mt-1">
-                            <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-sm text-[#737987]">
-                                <Currency />
-                            </span>
+                        <div className={`${fieldClass} mt-1 flex items-center gap-2`}>
+                            <span className="shrink-0 text-[#737987]">{symbol}</span>
                             <input
-                                className={`${fieldClass} pl-8`}
+                                className="min-w-0 flex-1 bg-transparent outline-none"
                                 inputMode="decimal"
                                 name="amount"
                                 value={formData.amount || ''}
@@ -166,7 +158,7 @@ const AddTransactionPopup = ({ visible, setVisible, expense }) => {
                                 <option value="">Select a card</option>
                                 {cards?.map((card) => (
                                     <option key={card.id} value={card.id}>
-                                        {card.title} · {card.balance?.toLocaleString()} {symbol}
+                                        {card.title} · {formatAmount(card.balance)} {symbol}
                                     </option>
                                 ))}
                             </select>

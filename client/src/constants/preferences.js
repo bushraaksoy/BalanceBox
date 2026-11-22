@@ -52,11 +52,22 @@ export const resolveDark = (theme) =>
     (theme === 'system' &&
         window.matchMedia('(prefers-color-scheme: dark)').matches);
 
+export const statusBarColor = (kind, isDark) => {
+    if (kind === 'page') return isDark ? '#111113' : '#F8F9FB';
+    if (kind === 'landing') return isDark ? '#111113' : '#f4f3f0';
+    if (kind === 'auth') return isDark ? '#111113' : '#f9fafb';
+    return isDark ? '#1c1c1e' : '#ffffff';
+};
+
+export const applyStatusBar = (color) => {
+    document.documentElement.style.setProperty('--status-bar', color);
+    document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', color);
+};
+
 export const applyTheme = (theme) => {
     const dark = resolveDark(theme);
     document.documentElement.classList.toggle('dark', dark);
-    document
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute('content', dark ? '#111113' : '#ffffff');
     return dark;
 };

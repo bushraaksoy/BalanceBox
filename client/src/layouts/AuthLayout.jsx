@@ -1,6 +1,7 @@
 import React from 'react';
 import Logo from '../components/Logo';
 import { Link } from 'react-router';
+import useStatusBar from '../hooks/useStatusBar';
 
 const AuthLayout = ({
     children,
@@ -10,6 +11,7 @@ const AuthLayout = ({
     linkText,
     linkTo,
 }) => {
+    useStatusBar('auth');
     return (
         <div className="app bg-gray-50 px-7 py-10 flex flex-col gap-10 text-center">
             <Link

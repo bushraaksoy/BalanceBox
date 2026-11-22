@@ -10,6 +10,7 @@ import {
     XAxis,
 } from 'recharts';
 import { useAuthContext } from '../context/AuthContext';
+import useStatusBar from '../hooks/useStatusBar';
 import { getAdminOverview, getAdminUsers } from '../services/adminService';
 
 const dayLabel = (iso) => {
@@ -59,6 +60,7 @@ const Breakdown = ({ title, rows }) => (
 );
 
 const Admin = () => {
+    useStatusBar('bar');
     const { userId, isAdmin } = useAuthContext();
     const navigate = useNavigate();
     const allowed = Boolean(userId) && userId !== 'null' && isAdmin === 'true';

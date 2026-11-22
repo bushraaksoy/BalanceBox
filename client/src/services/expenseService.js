@@ -37,14 +37,16 @@ export const addExpense = async (userId, data) => {
     }
 };
 export const editExpense = async (userId, expenseId, data) => {
+    const url = `${base_url}/expenses/${expenseId}`;
     try {
-        const url = `${base_url}/expenses/${expenseId}`;
         const res = await axios.put(url, data, {
             headers: { 'user-id': userId },
         });
         return res.data;
     } catch (error) {
-        console.log('Error adding expense: ', error.message);
+        throw new Error(
+            error.response?.data?.message || 'Could not update this expense'
+        );
     }
 };
 

@@ -12,12 +12,13 @@ import {
 import { useAuthContext } from '../../context/AuthContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import { getAnalyticsTransactions } from '../../services/analyticsService';
-import Currency from '../Currency';
 import { chartColors } from './chartColors';
+import { formatAmount } from '../../utils/formatAmount';
+import ChartEmpty from './ChartEmpty';
 
 const Graph = () => {
     const { userId } = useAuthContext();
-    const { isDark } = usePreferences();
+    const { isDark, symbol } = usePreferences();
     const grid = isDark ? '#52525b' : '#e7e5e4';
     const axis = isDark ? '#c8c8d0' : '#78716c';
 
@@ -26,10 +27,28 @@ const Graph = () => {
         queryFn: () => getAnalyticsTransactions(userId),
     });
 
+    const points = (transactions || []).map((point) => ({
+        ...point,
+        amount: Number(point.amount) || 0,
+    }));
+    const hasSpending = points.some((point) => point.amount > 0);
+
+    if (isLoading) {
+        return <div className="h-40 animate-pulse rounded-xl bg-[#F3F4F6]" />;
+    }
+
+    if (!hasSpending) {
+        return (
+            <ChartEmpty>
+                Spending from the last 30 days will show up here.
+            </ChartEmpty>
+        );
+    }
+
     return (
         <div className="h-64 text-xs">
         <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={transactions}>
+        <AreaChart data={points}>
             <CartesianGrid stroke={grid} strokeDasharray="3 3" />
             <XAxis
                 dataKey="date"
@@ -46,14 +65,7 @@ const Graph = () => {
                     color: isDark ? '#f4f4f5' : '#171717',
                     fontSize: 12,
                 }}
-                formatter={(value, name) => [
-                    name == 'amount' && (
-                        <>
-                            <Currency /> {value}
-                        </>
-                    ),
-                    (name = 'Amount'),
-                ]}
+                formatter={(value) => [`${symbol} ${formatAmount(value)}`, 'Amount']}
             />
             <Legend
                 iconType="circle"
@@ -76,12 +88,3 @@ const Graph = () => {
 };
 
 export default Graph;
-
-const formatNumber = (value) => {
-    if (value >= 1_000_000) {
-        return (value / 1_000_000).toFixed(2) + 'M';
-    } else if (value >= 1_000) {
-        return (value / 1_000).toFixed(2) + 'K';
-    }
-    return value.toFixed(2);
-};
