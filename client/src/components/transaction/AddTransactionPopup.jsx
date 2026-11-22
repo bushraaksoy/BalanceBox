@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useAuthContext } from '../../context/AuthContext';
 import { usePreferences } from '../../context/PreferencesContext';
 import {
@@ -108,9 +109,10 @@ const AddTransactionPopup = ({ visible, setVisible, expense }) => {
 
     if (!visible) return null;
 
-    return (
+    const frame = document.querySelector('.app');
+    const sheet = (
         <div
-            className="fixed inset-0 z-40 flex items-end bg-black/30"
+            className="fixed inset-0 z-50 flex items-end bg-black/40"
             onClick={() => setVisible(false)}
         >
             <form
@@ -205,6 +207,8 @@ const AddTransactionPopup = ({ visible, setVisible, expense }) => {
             </form>
         </div>
     );
+
+    return frame ? createPortal(sheet, frame) : sheet;
 };
 
 export default AddTransactionPopup;
