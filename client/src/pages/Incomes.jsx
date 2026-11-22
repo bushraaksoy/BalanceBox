@@ -13,7 +13,7 @@ import NoIncomeMessage from '../components/messages/NoIncomeMessage';
 const Incomes = () => {
     const { userId } = useAuthContext();
 
-    const { data: incomes, isLoading } = useQuery({
+    const { data: incomes, isLoading, isError } = useQuery({
         queryKey: ['incomes'],
         queryFn: () => getAllIncomes(userId),
         staleTime: Infinity,
@@ -21,7 +21,7 @@ const Incomes = () => {
 
     if (isLoading) {
         return (
-            <div className="app bg-gray-50">
+            <div className="app bg-[#F8F9FB]">
                 <MyIncomesSkeleton />
             </div>
         );
@@ -33,8 +33,12 @@ const Incomes = () => {
                 <AddIncomeDrawer trigger={<FiPlusCircle size={25} />} />
             </div>
             <div className="income-cards flex-col w-90 flex gap-3 overflow-scroll ">
-                {incomes.length > 0 ? (
-                    incomes?.map((income) => (
+                {isError ? (
+                    <p className="py-3 text-sm text-[#737987]">
+                        Couldn't load your incomes.
+                    </p>
+                ) : Array.isArray(incomes) && incomes.length > 0 ? (
+                    incomes.map((income) => (
                         <IncomeDetails
                             key={income.id}
                             income={income}

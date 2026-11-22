@@ -77,7 +77,7 @@ const Graph = () => {
                 dataKey="amount"
                 stroke={chartColors.series}
                 fill={chartColors.series}
-                fillOpacity={0.18}
+                fillOpacity={0.28}
                 strokeWidth={2}
                 isAnimationActive={false}
             />

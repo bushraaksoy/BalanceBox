@@ -67,16 +67,16 @@ const BudgetRemainder = () => {
     return (
         <div className={sectionClass}>
             <p className="text-sm text-[#737987]">Amount left to budget</p>
-            <div className="mt-1 text-3xl font-semibold tracking-tight">
+            <div className="mt-1 text-2xl font-semibold tracking-tight">
                 <Currency />
                 <Amount amount={left} />
             </div>
-            <p className="mt-1 text-sm text-[#737987]">
+            <p className="mt-1 text-xs text-[#737987]">
                 {overBudget && 'Over budget'}
                 {fullyAllocated && 'Fully allocated'}
                 {!overBudget && !fullyAllocated && `${percent}% of income allocated`}
             </p>
-            <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#F5D36B]">
+            <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#FFF3C4]">
                 <div
                     className="h-full rounded-full bg-[#E6B33D]"
                     style={{ width: `${bar}%` }}

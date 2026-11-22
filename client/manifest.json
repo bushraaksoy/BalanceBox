@@ -5,8 +5,8 @@
     "display": "standalone",
     "display_override": ["standalone", "minimal_ui"],
     "display_mode": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#ffffff",
+    "background_color": "#F8F9FB",
+    "theme_color": "#F8F9FB",
     "icons": [
         {
             "src": "/logo2.png",

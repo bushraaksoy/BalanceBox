@@ -26,7 +26,7 @@ const TransactionHistory = () => {
                 {currentMonth} Transaction History
             </h1>
             <TransactionsList transactions={transactions} />
-            <ViewAllButton to={'/transactions'} />
+            {transactions?.length > 0 && <ViewAllButton to={'/transactions'} />}
         </div>
     );
 };

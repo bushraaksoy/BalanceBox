@@ -6,7 +6,7 @@ import useStatusBar from '../hooks/useStatusBar';
 const SecondaryLayout = ({ children, heading, contentClassName = 'bg-white' }) => {
     useStatusBar(contentClassName.includes('F8F9FB') ? 'page' : 'bar');
     return (
-        <div className="app bg-gray-50">
+        <div className="app bg-[#F8F9FB]">
             <div className="relative flex h-full min-h-0 flex-col">
                 <header className={`shrink-0 ${contentClassName}`}>
                     <Heading>

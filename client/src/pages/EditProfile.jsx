@@ -73,7 +73,7 @@ const EditProfile = () => {
 
     if (isUpdateLoading) {
         return (
-            <div className="app bg-gray-50">
+            <div className="app bg-[#F8F9FB]">
                 <SimpleLoading />
             </div>
         );

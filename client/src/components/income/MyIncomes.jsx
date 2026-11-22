@@ -17,7 +17,7 @@ import SubHeading from '../ui/SubHeading';
 const MyIncomes = ({ className = '' }) => {
     const { userId } = useAuthContext();
 
-    const { data: incomes, isLoading } = useQuery({
+    const { data: incomes, isLoading, isError } = useQuery({
         queryKey: ['incomes'],
         queryFn: () => getAllIncomes(userId),
         staleTime: Infinity,
@@ -27,6 +27,8 @@ const MyIncomes = ({ className = '' }) => {
         return <MyIncomesSkeleton />;
     }
 
+    const list = Array.isArray(incomes) ? incomes : [];
+
     return (
         <div className={className}>
             <div className="flex justify-between items-center">
@@ -34,10 +36,12 @@ const MyIncomes = ({ className = '' }) => {
                 <AddIncomeDrawer trigger={<FiPlusCircle size={22} />} />
             </div>
             <div className="income-cards mt-1 flex flex-col">
-                {incomes.length > 0 ? (
-                    incomes
-                        .slice()
-                        ?.map((income) => (
+                {isError ? (
+                    <p className="py-3 text-sm text-[#737987]">
+                        Couldn't load your incomes.
+                    </p>
+                ) : list.length > 0 ? (
+                    list.map((income) => (
                             <IncomeDetails
                                 key={income.id}
                                 income={income}

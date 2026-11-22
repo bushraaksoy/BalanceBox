@@ -4,9 +4,9 @@ import chatBg from '../assets/images/chatbg.png';
 import useStatusBar from '../hooks/useStatusBar';
 
 const ChatLayout = ({ children, heading }) => {
-    useStatusBar('bar');
+    useStatusBar('surface');
     return (
-        <div className="app bg-gray-50">
+        <div className="app bg-[#F8F9FB]">
             <div className="flex h-full min-h-0 flex-col">
                 <SubpageAppBar title={heading} />
                 <div className="chatbot-layout-content relative min-h-0 flex-1 overflow-hidden bg-gray-100 px-2">

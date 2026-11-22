@@ -11,7 +11,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
         />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#F8F9FB" />
         <script>
             (function () {
                 var theme = localStorage.getItem('balancebox-theme') || 'light';
@@ -20,26 +20,7 @@
                     (theme === 'system' &&
                         window.matchMedia('(prefers-color-scheme: dark)').matches);
                 document.documentElement.classList.toggle('dark', dark);
-                var path = location.pathname;
-                var userId = localStorage.getItem('userId');
-                var guest = !userId || userId === 'null';
-                var grey = /^\/(activity|analytics|budgeting|account)\/?$/.test(path);
-                var auth = /^\/(login|register)\/?$/.test(path);
-                var color = grey
-                    ? dark
-                        ? '#111113'
-                        : '#F8F9FB'
-                    : auth
-                      ? dark
-                          ? '#111113'
-                          : '#f9fafb'
-                      : path === '/' && guest
-                        ? dark
-                            ? '#111113'
-                            : '#f4f3f0'
-                        : dark
-                          ? '#1c1c1e'
-                          : '#ffffff';
+                var color = dark ? '#111113' : '#F8F9FB';
                 document.documentElement.style.setProperty('--status-bar', color);
                 var meta = document.querySelector('meta[name="theme-color"]');
                 if (meta) meta.setAttribute('content', color);
@@ -47,7 +28,7 @@
         </script>
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <title>BalanceBox — free finance budgeting app</title>
         <meta
             name="description"

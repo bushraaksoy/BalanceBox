@@ -6,6 +6,7 @@
 html,
 body {
     background: #ffffff;
+    color-scheme: light;
     touch-action: manipulation;
 }
 
@@ -57,7 +58,7 @@ html:has(.app) #root {
         margin: max(24px, calc((100vh - 844px) / 2)) auto;
         border-radius: 25px;
         padding-top: 0;
-        background-color: #f9fafb;
+        background-color: #F8F9FB;
     }
 }
 
@@ -184,6 +185,15 @@ html:has(.app) #root {
     background-color: #1c1c1e;
 }
 
+.dark .rounded-xl.bg-white,
+.dark .rounded-2xl.bg-white,
+.dark .rounded-3xl.bg-white,
+.dark .rounded-xl.bg-\[\#ffffff\],
+.dark .rounded-2xl.bg-\[\#ffffff\],
+.dark .rounded-3xl.bg-\[\#ffffff\] {
+    background-color: #2a2a2e;
+}
+
 .dark .bg-gray-50,
 .dark .bg-\[\#F8F9FB\],
 .dark .bg-\[\#f8f9fb\],
@@ -193,6 +203,9 @@ html:has(.app) #root {
 }
 
 @media (max-width: 767px) {
+    html,
+    body,
+    #root,
     .app,
     .dark .app,
     .dark .app.bg-gray-50 {
@@ -210,6 +223,10 @@ html:has(.app) #root {
 .dark .bg-stone-100,
 .dark .bg-\[\#F3F4F6\] {
     background-color: #2a2a2e;
+}
+
+.dark .progress-track {
+    background-color: #3f3f46;
 }
 
 .dark .bg-\[\#E8E9ED\] {
@@ -249,6 +266,12 @@ html:has(.app) #root {
     color: #ffffff;
 }
 
+.category-icon svg,
+.dark .category-icon svg,
+.dark .income-icon svg {
+    color: inherit;
+}
+
 .dark .from-yellow-200 svg,
 .dark .bg-\[\#E6B33D\] svg,
 .dark .bg-yellow-400 svg,
@@ -266,8 +289,8 @@ html:has(.app) #root {
     border-color: #3f3f46;
 }
 
-.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]),
-.dark .divide-gray-100 > :not([hidden]) ~ :not([hidden]) {
+.dark .divide-gray-200 > :not([hidden]),
+.dark .divide-gray-100 > :not([hidden]) {
     border-color: #3f3f46;
 }
 
@@ -282,9 +305,9 @@ html:has(.app) #root {
 }
 
 .dark .balance-card {
-    background: #171717;
+    background: #2a2a2e;
     color: #ffffff;
-    border-color: transparent;
+    border-color: #3f3f46;
 }
 
 .balance-card .balance-amount {

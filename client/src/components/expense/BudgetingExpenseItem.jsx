@@ -1,5 +1,5 @@
 import React from 'react';
-import { expenseCategoryIcons } from '../../constants/constants';
+import CategoryIcon from './CategoryIcon';
 import Currency from '../Currency';
 import Amount from '../ui/Amount';
 
@@ -13,9 +13,7 @@ const BudgetingExpenseItem = ({ category, title, amount, frequency }) => {
     return (
         <div className="flex w-full items-center justify-between gap-3 border-b border-[#E8E9ED] py-3 text-sm last:border-0">
             <div className="flex min-w-0 items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F3F4F6] text-[#171717] [&_img]:h-4 [&_img]:w-4 [&_svg]:h-4 [&_svg]:w-4">
-                    {expenseCategoryIcons[category]}
-                </div>
+                <CategoryIcon category={category} />
                 <div className="min-w-0 text-left">
                     <h3 className="truncate font-medium leading-5 text-[#171717]">
                         {title}

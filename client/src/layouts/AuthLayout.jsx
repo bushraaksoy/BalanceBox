@@ -13,7 +13,7 @@ const AuthLayout = ({
 }) => {
     useStatusBar('auth');
     return (
-        <div className="app bg-gray-50 px-7 py-10 flex flex-col gap-10 text-center">
+        <div className="app bg-[#F8F9FB] px-7 py-10 flex flex-col gap-10 text-center">
             <Link
                 to="/"
                 aria-label="Back to BalanceBox"

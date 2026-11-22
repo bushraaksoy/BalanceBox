@@ -13,7 +13,7 @@ const BudgetingIncomeCard = ({ amount, title, category, frequency }) => {
     return (
         <div className="flex w-full items-center justify-between gap-3 border-b border-[#E8E9ED] py-3 text-sm last:border-0">
             <div className="flex min-w-0 items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+                <div className="income-icon flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
                     <LuArrowDownLeft size={16} />
                 </div>
                 <div className="min-w-0 text-left">

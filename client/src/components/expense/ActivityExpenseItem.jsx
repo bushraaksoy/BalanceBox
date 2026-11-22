@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { TbCategoryFilled } from 'react-icons/tb';
-import { expenseCategoryIcons } from '../../constants/constants';
+import CategoryIcon from './CategoryIcon';
 import Currency from '../Currency';
 import Amount from '../ui/Amount';
 import AddTransactionPopup from '../transaction/AddTransactionPopup';
@@ -58,9 +57,6 @@ const ActivityExpenseItem = ({ expense, canLog }) => {
     const spent = expense.usedAmount || 0;
     const budget = expense.amount || 0;
     const status = spendingState(spent, budget);
-    const icon = expenseCategoryIcons[expense.category] || (
-        <TbCategoryFilled size={16} />
-    );
 
     const openSheet = () => {
         if (!canLog) {
@@ -79,9 +75,7 @@ const ActivityExpenseItem = ({ expense, canLog }) => {
             >
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-center gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#F3F4F6] text-[#171717] [&_img]:h-4 [&_img]:w-4 [&_svg]:h-4 [&_svg]:w-4">
-                            {icon}
-                        </div>
+                        <CategoryIcon category={expense.category} />
                         <div className="min-w-0">
                             <h3 className="truncate font-medium text-[#171717]">
                                 {expense.title}
@@ -102,7 +96,7 @@ const ActivityExpenseItem = ({ expense, canLog }) => {
                     </span>
                 </div>
                 <div>
-                    <div className="h-1.5 overflow-hidden rounded-full bg-[#F3F4F6]">
+                    <div className="progress-track h-1.5 overflow-hidden rounded-full bg-[#F3F4F6]">
                         <span
                             className={`block h-full rounded-full ${status.bar}`}
                             style={{ width: `${status.width}%` }}

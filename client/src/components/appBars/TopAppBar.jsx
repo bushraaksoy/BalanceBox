@@ -6,7 +6,7 @@ import { IoChatbubbleEllipsesSharp } from 'react-icons/io5';
 
 const TopAppBar = () => {
     return (
-        <div className="z-10 flex h-[55px] w-full shrink-0 items-center justify-between border-b border-stone-300 bg-white px-5 py-3">
+        <div className="z-10 flex w-full shrink-0 items-center justify-between px-5 py-8">
             <FullLogo />
             <NavIcon to="/chat">
                 <IoChatbubbleEllipsesSharp size={20} />

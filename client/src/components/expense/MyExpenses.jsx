@@ -13,7 +13,7 @@ import SubHeading from '../ui/SubHeading';
 
 const MyExpenses = ({ className = '' }) => {
     const { userId } = useAuthContext();
-    const { data: expenses, isLoading } = useQuery({
+    const { data: expenses, isLoading, isError } = useQuery({
         queryKey: ['expenses'],
         queryFn: () => getUserExpenses(userId),
         staleTime: Infinity,
@@ -23,6 +23,8 @@ const MyExpenses = ({ className = '' }) => {
         return <MyExpensesSkeleton />;
     }
 
+    const list = Array.isArray(expenses) ? expenses : [];
+
     return (
         <div className={className}>
             <div className="flex justify-between items-center">
@@ -30,10 +32,12 @@ const MyExpenses = ({ className = '' }) => {
                 <AddExpenseDrawer trigger={<FiPlusCircle size={22} />} />
             </div>
             <div className="expense-items flex flex-col">
-                {expenses?.length > 0 ? (
-                    expenses
-                        ?.slice()
-                        .map((expense) => (
+                {isError ? (
+                    <p className="py-3 text-sm text-[#737987]">
+                        Couldn't load your expenses.
+                    </p>
+                ) : list.length > 0 ? (
+                    list.map((expense) => (
                             <ExpenseDetails
                                 key={expense.id}
                                 expense={expense}

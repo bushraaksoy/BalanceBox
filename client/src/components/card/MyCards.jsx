@@ -14,7 +14,7 @@ const MyCards = ({ className = '' }) => {
     const { userId } = useAuthContext();
     const [hidden, setHidden] = useState(false);
 
-    const { data: cards, isLoading } = useQuery({
+    const { data: cards, isLoading, isError } = useQuery({
         queryKey: ['cards'],
         queryFn: () => getCards(userId),
         staleTime: Infinity,
@@ -23,6 +23,8 @@ const MyCards = ({ className = '' }) => {
     if (isLoading) {
         return <MyCardsSkeleton />;
     }
+
+    const list = Array.isArray(cards) ? cards : [];
 
     return (
         <div className={className}>
@@ -37,14 +39,19 @@ const MyCards = ({ className = '' }) => {
                     >
                         {hidden ? <FiEyeOff size={18} /> : <FiEye size={18} />}
                     </button>
-                    {cards?.length > 0 && (
+                    {list.length > 0 && (
                         <AddCardDrawer trigger={<FiPlusCircle size={22} />} />
                     )}
                 </div>
             </div>
             <div className="mt-2 flex gap-3 overflow-x-scroll">
-                {cards.length < 1 && <AddCardDrawer trigger={<AddIncome />} />}
-                {cards?.map((card) => (
+                {isError && (
+                    <p className="text-sm text-[#737987]">Couldn't load your cards.</p>
+                )}
+                {!isError && list.length < 1 && (
+                    <AddCardDrawer trigger={<AddIncome />} />
+                )}
+                {list.map((card) => (
                     <CardDetails
                         card={card}
                         key={card.id}

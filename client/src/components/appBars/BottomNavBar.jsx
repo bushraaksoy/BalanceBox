@@ -78,7 +78,7 @@ const BottomNavBar = () => {
         >
             <div
                 ref={rowRef}
-                className="pointer-events-auto relative flex rounded-full border border-white/70 bg-white/25 px-1 py-1 shadow-[0_4px_16px_rgba(23,23,23,0.08)] backdrop-blur-[64px] backdrop-saturate-150 dark:border-white/15 dark:bg-white/10"
+                className="pointer-events-auto relative flex rounded-full border border-[#E5E7EB] bg-white/80 px-1 py-1 shadow-[0_4px_16px_rgba(23,23,23,0.16)] backdrop-blur-[64px] backdrop-saturate-150 dark:border-[#3f3f46] dark:bg-[#1c1c1e]/85 dark:shadow-[0_4px_16px_rgba(0,0,0,0.45)]"
             >
                 {pill && (
                     <span

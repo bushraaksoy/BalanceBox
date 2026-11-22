@@ -55,11 +55,12 @@ const GoalRow = ({ goal }) => {
 
 const MySavings = ({ className = '' }) => {
     const { userId } = useAuthContext();
-    const { data: goals = [], isLoading } = useQuery({
+    const { data: goals, isLoading, isError } = useQuery({
         queryKey: ['savings'],
         queryFn: () => getAllSavings(userId),
         staleTime: Infinity,
     });
+    const list = Array.isArray(goals) ? goals : [];
 
     return (
         <div className={className}>
@@ -68,8 +69,12 @@ const MySavings = ({ className = '' }) => {
                 <AddGoalDrawer trigger={<FiPlusCircle size={22} />} />
             </div>
             <div className="mt-1">
-                {isLoading ? null : goals.length > 0 ? (
-                    goals.map((goal) => <GoalRow key={goal.id} goal={goal} />)
+                {isLoading ? null : isError ? (
+                    <p className="py-3 text-sm text-[#737987]">
+                        Couldn't load your goals.
+                    </p>
+                ) : list.length > 0 ? (
+                    list.map((goal) => <GoalRow key={goal.id} goal={goal} />)
                 ) : (
                     <NoGoalsMessage />
                 )}
