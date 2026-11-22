@@ -18,6 +18,7 @@ import Transactions from '../pages/Transactions';
 import Chat from '../pages/Chat';
 import Admin from '../pages/Admin';
 import Settings from '../pages/Settings';
+import ErrorPage from '../pages/Error';
 
 const RootPage = () => {
     const { userId } = useAuthContext();
@@ -26,6 +27,9 @@ const RootPage = () => {
 };
 
 const router = createBrowserRouter([
+    {
+        errorElement: <ErrorPage />,
+        children: [
     {
         path: '/',
         element: <RootPage />,
@@ -128,6 +132,8 @@ const router = createBrowserRouter([
                 <Chat />
             </ProtectedRoute>
         ),
+    },
+        ],
     },
 ]);
 

@@ -20,6 +20,10 @@ const BalanceCard = () => {
         return <BalanceCardSkeleton />;
     }
 
+    const currentBalance = balanceOverview?.currentBalance ?? 0;
+    const totalIncome = balanceOverview?.totalIncome ?? 0;
+    const totalExpenses = balanceOverview?.totalExpenses ?? 0;
+
     return (
         <div className="w-full bg-gradient-to-br from-yellow-200 to-yellow-500 h-46 rounded-2xl flex flex-col justify-evenly text-stone-800 shadow-md">
             <div className=" text-center">
@@ -27,19 +31,19 @@ const BalanceCard = () => {
                     <span>
                         <Currency />
                     </span>{' '}
-                    <Amount amount={balanceOverview['currentBalance']} />
+                    <Amount amount={currentBalance} />
                 </div>
                 <h2 className="text-md">Available Balance</h2>
             </div>
             <div className="flex justify-evenly ">
                 <BalanceCardInfo
                     title="Total Income"
-                    amount={balanceOverview['totalIncome']}
+                    amount={totalIncome}
                     icon={<FaArrowUpLong size={30} />}
                 />
                 <BalanceCardInfo
                     title="Total Expenses"
-                    amount={balanceOverview['totalExpenses']}
+                    amount={totalExpenses}
                     icon={<FaArrowDownLong size={30} />}
                 />
             </div>
