@@ -11,7 +11,7 @@ import ViewAllButton from '../buttons/ViewAllButton';
 import BudgetingExpenseItem from './BudgetingExpenseItem';
 import SubHeading from '../ui/SubHeading';
 
-const MyExpenses = () => {
+const MyExpenses = ({ className = '' }) => {
     const { userId } = useAuthContext();
     const { data: expenses, isLoading } = useQuery({
         queryKey: ['expenses'],
@@ -24,7 +24,7 @@ const MyExpenses = () => {
     }
 
     return (
-        <div className="expenses border border-gray-200  rounded-2xl p-3">
+        <div className={className}>
             <div className="flex justify-between items-center">
                 <SubHeading className="!py-1 !text-sm">My Expenses</SubHeading>
                 <AddExpenseDrawer trigger={<FiPlusCircle size={22} />} />
@@ -42,6 +42,7 @@ const MyExpenses = () => {
                                         category={expense.category}
                                         title={expense.title}
                                         amount={expense.amount}
+                                        frequency={expense.frequency}
                                     />
                                 }
                             />

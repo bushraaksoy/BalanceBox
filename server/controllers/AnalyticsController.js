@@ -84,19 +84,31 @@ class AnalyticsController {
     static async getBalanceOverview(req, res) {
         try {
             const userId = req.userId;
-            const period = req.query?.period;
-            const interval = period - 1 || 0;
-            const now = new Date();
-            const startPeriod = new Date(
-                now.getFullYear(),
-                now.getMonth() - interval,
-                1
-            );
-            const endPeriod = new Date(
-                now.getFullYear(),
-                now.getMonth() + 1,
-                1
-            );
+            const monthMatch =
+                typeof req.query.month === 'string' &&
+                /^(\d{4})-(\d{2})$/.exec(req.query.month);
+            let startPeriod;
+            let endPeriod;
+            if (monthMatch) {
+                const year = Number(monthMatch[1]);
+                const month = Number(monthMatch[2]) - 1;
+                startPeriod = new Date(year, month, 1);
+                endPeriod = new Date(year, month + 1, 1);
+            } else {
+                const period = req.query?.period;
+                const interval = period - 1 || 0;
+                const now = new Date();
+                startPeriod = new Date(
+                    now.getFullYear(),
+                    now.getMonth() - interval,
+                    1
+                );
+                endPeriod = new Date(
+                    now.getFullYear(),
+                    now.getMonth() + 1,
+                    1
+                );
+            }
             let currentBalance = await prisma.card.aggregate({
                 where: { userId },
                 _sum: { balance: true },
@@ -160,12 +172,23 @@ class AnalyticsController {
                 _sum: { amount: true },
             });
 
+            let totalSavings = await prisma.saving.aggregate({
+                where: { userId },
+                _sum: { monthlySaving: true },
+            });
+
             totalIncome = totalIncome._sum.amount || 0;
             totalExpenses = totalExpenses._sum.amount || 0;
+            totalSavings = totalSavings._sum.monthlySaving || 0;
 
-            const budgetRemainder = totalIncome - totalExpenses;
+            const totalAllocated = totalExpenses + totalSavings;
+            const budgetRemainder = totalIncome - totalAllocated;
 
-            return res.status(200).send({ budgetRemainder });
+            return res.status(200).send({
+                totalIncome,
+                totalAllocated,
+                budgetRemainder,
+            });
         } catch (error) {
             console.log(`error: ${error}`);
             return res.status(500).send({ error: 'A server error occured' });

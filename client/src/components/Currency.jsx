@@ -1,8 +1,8 @@
-import React from 'react';
+import { usePreferences } from '../context/PreferencesContext';
 
 const Currency = () => {
-    const sign = '₸';
-    return <div className="inline"> {sign} </div>;
+    const { symbol } = usePreferences();
+    return <div className="inline"> {symbol} </div>;
 };
 
 export default Currency;

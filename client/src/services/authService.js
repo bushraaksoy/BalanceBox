@@ -31,8 +31,9 @@ export const register = async (username, password) => {
     }
 };
 
-export const signout = (navigate, setUserId) => {
+export const signout = (navigate, setUserId, setIsAdmin) => {
     setUserId(null);
+    if (setIsAdmin) setIsAdmin(null);
     console.log('Signout done?');
     navigate('/login');
 };

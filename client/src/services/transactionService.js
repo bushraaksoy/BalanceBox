@@ -36,14 +36,29 @@ export const addUserTransaction = async (userId, type, data) => {
 
 export const addExpenseTransaction = async (userId, data) => {
     try {
-        console.log(data, userId);
         const url = `${base_url}/transactions/expense`;
         const res = await axios.post(url, data, {
             headers: { 'user-id': userId },
         });
         return res.data;
     } catch (error) {
-        console.log('error adding expense transaction: ', error);
+        const message =
+            error.response?.data?.message || 'Could not log this expense';
+        throw new Error(message);
+    }
+};
+
+export const deleteTransaction = async (userId, transactionId) => {
+    try {
+        const url = `${base_url}/transactions/${transactionId}`;
+        const res = await axios.delete(url, {
+            headers: { 'user-id': userId },
+        });
+        return res.data;
+    } catch (error) {
+        const message =
+            error.response?.data?.message || 'Could not undo that expense';
+        throw new Error(message);
     }
 };
 

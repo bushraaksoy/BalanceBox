@@ -1,9 +1,12 @@
 @import url('./assets/fonts/fonts.css');
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 html,
 body {
     background: #ffffff;
+    touch-action: manipulation;
 }
 
 body {
@@ -13,6 +16,14 @@ body {
 #root {
     width: 100%;
     min-height: 100vh;
+}
+
+html:has(.app),
+html:has(.app) body,
+html:has(.app) #root {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
 }
 
 ::-webkit-scrollbar {
@@ -27,6 +38,7 @@ body {
     margin: 0;
     border-radius: 0;
     overflow: hidden;
+    overscroll-behavior: none;
     transform: translateZ(0);
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top);
@@ -47,6 +59,13 @@ body {
         padding-top: 0;
         background-color: #f9fafb;
     }
+}
+
+.subpage-layout-content,
+.main-layout-content,
+.chatbot-layout-content {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .text-2xs {
@@ -133,4 +152,167 @@ body {
 
 .pulse-animate {
     animation: pulse 0.5s ease-in-out 5;
+}
+
+.dark {
+    color-scheme: dark;
+}
+
+.dark,
+.dark body {
+    background: #111113;
+    color: #f4f4f5;
+}
+
+.dark .app {
+    background-color: #111113;
+    color: #f4f4f5;
+}
+
+@media (min-width: 768px) {
+    .dark body {
+        background: #0c0c0e;
+    }
+
+    .dark .app {
+        background-color: #111113;
+    }
+}
+
+.dark .bg-white,
+.dark .bg-\[\#ffffff\] {
+    background-color: #1c1c1e;
+}
+
+.dark .bg-gray-50,
+.dark .bg-\[\#F8F9FB\],
+.dark .bg-\[\#f8f9fb\],
+.dark .bg-\[\#f4f3f0\],
+.dark .bg-\[\#f4f3f0\]\/80 {
+    background-color: #111113;
+}
+
+.dark .bg-gray-50\/90 {
+    background-color: rgb(17 17 19 / 0.9);
+}
+
+.dark .bg-gray-100,
+.dark .bg-gray-200,
+.dark .bg-stone-50,
+.dark .bg-stone-100,
+.dark .bg-\[\#F3F4F6\] {
+    background-color: #2a2a2e;
+}
+
+.dark .bg-\[\#E8E9ED\] {
+    background-color: #3a3a3e;
+}
+
+.dark .text-\[\#171717\],
+.dark .text-black,
+.dark .text-stone-700,
+.dark .text-stone-800,
+.dark .text-stone-900 {
+    color: #f4f4f5;
+}
+
+.dark .from-yellow-200 {
+    color: #292524;
+}
+
+.dark .text-\[\#737987\]:not(svg),
+.dark .text-stone-400:not(svg),
+.dark .text-stone-500:not(svg),
+.dark .text-stone-600:not(svg),
+.dark .text-gray-400:not(svg),
+.dark .text-gray-500:not(svg),
+.dark .text-gray-600:not(svg) {
+    color: #c8c8d0;
+}
+
+.dark .bg-\[\#E6B33D\],
+.dark .bg-yellow-400,
+.dark .bg-yellow-500,
+.dark .from-\[\#F5D36B\].text-\[\#171717\] {
+    color: #171717;
+}
+
+.dark svg {
+    color: #ffffff;
+}
+
+.dark .from-yellow-200 svg,
+.dark .bg-\[\#E6B33D\] svg,
+.dark .bg-yellow-400 svg,
+.dark .bg-yellow-500 svg,
+.dark .from-\[\#F5D36B\] svg {
+    color: #171717;
+}
+
+.dark .border-\[\#E8E9ED\],
+.dark .border-gray-200,
+.dark .border-gray-300,
+.dark .border-stone-200,
+.dark .border-stone-300,
+.dark .border-stone-200\/80 {
+    border-color: #3f3f46;
+}
+
+.dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]),
+.dark .divide-gray-100 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #3f3f46;
+}
+
+.dark ::placeholder {
+    color: #c8c8d0;
+}
+
+.balance-card {
+    background: #ffffff;
+    color: #171717;
+    border: 1px solid #e8e9ed;
+}
+
+.dark .balance-card {
+    background: #171717;
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.balance-card .balance-amount {
+    color: #171717;
+}
+
+.dark .balance-card .balance-amount {
+    color: #f5d36b;
+}
+
+.balance-card .balance-muted {
+    color: #737987;
+}
+
+.dark .balance-card .balance-muted {
+    color: rgb(255 255 255 / 0.6);
+}
+
+.balance-card .balance-rule {
+    border-color: #e8e9ed;
+}
+
+.dark .balance-card .balance-rule {
+    border-color: rgb(255 255 255 / 0.1);
+}
+
+@keyframes glow-dark {
+    0%,
+    100% {
+        background: #2a2a2e;
+    }
+    50% {
+        background: #3a3a3e;
+    }
+}
+
+.dark .glow {
+    animation-name: glow-dark;
 }

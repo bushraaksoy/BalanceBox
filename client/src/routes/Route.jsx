@@ -16,6 +16,8 @@ import Incomes from '../pages/Incomes';
 import Expenses from '../pages/Expenses';
 import Transactions from '../pages/Transactions';
 import Chat from '../pages/Chat';
+import Admin from '../pages/Admin';
+import Settings from '../pages/Settings';
 
 const RootPage = () => {
     const { userId } = useAuthContext();
@@ -71,6 +73,14 @@ const router = createBrowserRouter([
         ),
     },
     {
+        path: '/settings/:section',
+        element: (
+            <ProtectedRoute>
+                <Settings />
+            </ProtectedRoute>
+        ),
+    },
+    {
         path: '/edit-profile',
         element: (
             <ProtectedRoute>
@@ -110,6 +120,7 @@ const router = createBrowserRouter([
             </ProtectedRoute>
         ),
     },
+    { path: '/admin', element: <Admin /> },
     {
         path: '/chat',
         element: (

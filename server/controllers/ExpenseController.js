@@ -9,19 +9,22 @@ class ExpenseController {
                 where: { userId },
             });
 
-            // transactions to get how much has been spent already:
+            const monthMatch =
+                typeof req.query.month === 'string' &&
+                /^(\d{4})-(\d{2})$/.exec(req.query.month);
             const now = new Date();
-            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            const startOfNextMonth = new Date(
-                now.getFullYear(),
-                now.getMonth() + 1,
-                1
-            );
+            const year = monthMatch ? Number(monthMatch[1]) : now.getFullYear();
+            const month = monthMatch
+                ? Number(monthMatch[2]) - 1
+                : now.getMonth();
+            const startOfMonth = new Date(year, month, 1);
+            const startOfNextMonth = new Date(year, month + 1, 1);
 
             let totalExpenseSpending = {};
             const transactions = await prisma.transactionHistory.findMany({
                 where: {
                     userId,
+                    type: 'EXPENSE',
                     createdAt: { gte: startOfMonth, lt: startOfNextMonth },
                 },
                 orderBy: { createdAt: 'desc' },

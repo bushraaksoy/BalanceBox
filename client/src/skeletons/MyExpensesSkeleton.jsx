@@ -1,4 +1,5 @@
 import React from 'react';
+import Currency from '../components/Currency';
 
 const MyExpensesSkeleton = () => {
     return (
@@ -16,7 +17,7 @@ const MyExpensesSkeleton = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <div>
-                            <span>₸ </span>
+                            <span><Currency /> </span>
                             <span className="text-xs"></span>
                         </div>
                     </div>
@@ -30,7 +31,7 @@ const MyExpensesSkeleton = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <div>
-                            <span>₸ </span>
+                            <span><Currency /> </span>
                             <span className="text-xs"></span>
                         </div>
                     </div>
@@ -44,7 +45,7 @@ const MyExpensesSkeleton = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <div>
-                            <span>₸ </span>
+                            <span><Currency /> </span>
                             <span className="text-xs"></span>
                         </div>
                     </div>
@@ -58,7 +59,7 @@ const MyExpensesSkeleton = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <div>
-                            <span>₸ </span>
+                            <span><Currency /> </span>
                             <span className="text-xs"></span>
                         </div>
                     </div>

@@ -1,15 +1,19 @@
 import React from 'react';
 import SubpageAppBar from '../components/appBars/SubpageAppBar';
+import chatBg from '../assets/images/chatbg.png';
 
 const ChatLayout = ({ children, heading }) => {
     return (
         <div className="app bg-gray-50">
-            <div className="h-full">
+            <div className="flex h-full min-h-0 flex-col">
                 <SubpageAppBar title={heading} />
-                <div
-                    className={`chatbot-layout-content px-2 pt-13 pb-22 flex flex-col justify-between bg-gray-100 h-full bg-[url('/chat-wallpaper.png')] bg-no-repeat bg-center bg-cover bg-fixed `}
-                >
-                    {children}
+                <div className="chatbot-layout-content relative min-h-0 flex-1 overflow-hidden bg-gray-100 px-2">
+                    <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 bg-no-repeat bg-center bg-cover opacity-40"
+                        style={{ backgroundImage: `url(${chatBg})` }}
+                    />
+                    <div className="relative h-full">{children}</div>
                 </div>
             </div>
         </div>

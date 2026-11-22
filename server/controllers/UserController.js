@@ -5,6 +5,17 @@ class UserController {
         try {
             const users = await prisma.user.findMany({
                 orderBy: { createdAt: 'desc' },
+                select: {
+                    id: true,
+                    username: true,
+                    email: true,
+                    fullname: true,
+                    avatar: true,
+                    dob: true,
+                    gender: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
             });
             res.status(200).json(users);
         } catch (error) {
@@ -22,6 +33,17 @@ class UserController {
             const { userId } = req.params;
             const user = await prisma.user.findUnique({
                 where: { id: userId },
+                select: {
+                    id: true,
+                    username: true,
+                    email: true,
+                    fullname: true,
+                    avatar: true,
+                    dob: true,
+                    gender: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
             });
             if (!user) {
                 return res.status(404).json({ message: 'User does not exist' });

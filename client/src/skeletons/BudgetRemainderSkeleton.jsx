@@ -2,10 +2,7 @@ import React from 'react';
 
 const BudgetRemainderSkeleton = () => {
     return (
-        <div className="budget-leftover flex justify-between glow py-3 rounded-2xl text-gray-100">
-            <h1 className="font-medium"></h1>
-            <p className="text-center font-semibold text-lg px-3">₸</p>
-        </div>
+        <div className="h-40 rounded-2xl border border-[#E8E9ED] bg-white shadow-[0_8px_24px_rgba(23,23,23,0.04)]" />
     );
 };
 

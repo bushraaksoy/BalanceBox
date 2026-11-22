@@ -41,6 +41,7 @@ class AuthController {
                 return res.status(200).send({
                     message: 'Logged in successfully',
                     userId: user.id,
+                    isAdmin: user.isAdmin,
                     access_token,
                     refresh_token,
                 });

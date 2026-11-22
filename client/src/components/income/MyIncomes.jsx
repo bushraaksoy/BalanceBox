@@ -14,7 +14,7 @@ import { FaAngleRight, FaArrowRightLong } from 'react-icons/fa6';
 import ViewAllButton from '../buttons/ViewAllButton';
 import SubHeading from '../ui/SubHeading';
 
-const MyIncomes = () => {
+const MyIncomes = ({ className = '' }) => {
     const { userId } = useAuthContext();
 
     const { data: incomes, isLoading } = useQuery({
@@ -28,12 +28,12 @@ const MyIncomes = () => {
     }
 
     return (
-        <div className="incomes border border-gray-200 rounded-2xl p-3 ">
+        <div className={className}>
             <div className="flex justify-between items-center">
                 <SubHeading className="!py-1 !text-sm">My Incomes</SubHeading>
                 <AddIncomeDrawer trigger={<FiPlusCircle size={22} />} />
             </div>
-            <div className="income-cards flex-col flex gap-1 overflow-scroll ">
+            <div className="income-cards mt-1 flex flex-col">
                 {incomes.length > 0 ? (
                     incomes
                         .slice()
@@ -45,6 +45,8 @@ const MyIncomes = () => {
                                     <BudgetingIncomeCard
                                         amount={income.amount}
                                         title={income.title}
+                                        category={income.category}
+                                        frequency={income.frequency}
                                     />
                                 }
                             />

@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from './Card';
 import AddCardDrawer from '../drawers/AddCardDrawer';
-import { FiPlusCircle } from 'react-icons/fi';
+import { FiEye, FiEyeOff, FiPlusCircle } from 'react-icons/fi';
 import AddIncome from '../income/AddIncome';
 import { useQuery } from '@tanstack/react-query';
-import { getCards, getCardsDetails } from '../../services/cardService';
+import { getCards } from '../../services/cardService';
 import { useAuthContext } from '../../context/AuthContext';
 import CardDetails from '../drawers/CardDetails';
 import MyCardsSkeleton from '../../skeletons/MyCardsSkeleton';
 import SubHeading from '../ui/SubHeading';
 
-const MyCards = () => {
+const MyCards = ({ className = '' }) => {
     const { userId } = useAuthContext();
+    const [hidden, setHidden] = useState(false);
 
     const { data: cards, isLoading } = useQuery({
         queryKey: ['cards'],
@@ -20,26 +21,39 @@ const MyCards = () => {
     });
 
     if (isLoading) {
-        console.log('loading...');
         return <MyCardsSkeleton />;
     }
 
     return (
-        <div className="cards border border-gray-200 rounded-2xl p-3 ">
-            <div className="flex justify-between items-center">
+        <div className={className}>
+            <div className="flex items-center justify-between">
                 <SubHeading className="!py-1 !text-sm">My Cards</SubHeading>
-                {cards?.length > 0 && (
-                    <AddCardDrawer trigger={<FiPlusCircle size={22} />} />
-                )}
+                <div className="flex items-center gap-3">
+                    <button
+                        type="button"
+                        onClick={() => setHidden((value) => !value)}
+                        aria-label={hidden ? 'Show balances' : 'Hide balances'}
+                        className="text-[#171717]"
+                    >
+                        {hidden ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                    </button>
+                    {cards?.length > 0 && (
+                        <AddCardDrawer trigger={<FiPlusCircle size={22} />} />
+                    )}
+                </div>
             </div>
-            <div className="flex gap-4 overflow-x-scroll">
+            <div className="mt-2 flex gap-3 overflow-x-scroll">
                 {cards.length < 1 && <AddCardDrawer trigger={<AddIncome />} />}
                 {cards?.map((card) => (
                     <CardDetails
                         card={card}
                         key={card.id}
                         trigger={
-                            <Card title={card.title} balance={card.balance} />
+                            <Card
+                                title={card.title}
+                                balance={card.balance}
+                                hidden={hidden}
+                            />
                         }
                     />
                 ))}

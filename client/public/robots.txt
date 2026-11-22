@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /activity
+Disallow: /admin
+Disallow: /analytics
+Disallow: /account
+Disallow: /budgeting
+Disallow: /chat
+Disallow: /edit-profile
+Disallow: /expenses
+Disallow: /incomes
+Disallow: /notifications
+Disallow: /savings
+Disallow: /transactions
+
+Sitemap: https://balancebox.online/sitemap.xml

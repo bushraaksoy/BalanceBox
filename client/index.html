@@ -9,14 +9,61 @@
         <meta name="android-mobile-web-app-title" content="Balance Box" />
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+            content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
         />
         <meta name="theme-color" content="#ffffff" />
+        <script>
+            (function () {
+                var theme = localStorage.getItem('balancebox-theme') || 'light';
+                var dark =
+                    theme === 'dark' ||
+                    (theme === 'system' &&
+                        window.matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.classList.toggle('dark', dark);
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', dark ? '#111113' : '#ffffff');
+            })();
+        </script>
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-
-        <title>Balance Box</title>
+        <title>BalanceBox — free finance budgeting app</title>
+        <meta
+            name="description"
+            content="BalanceBox is a free finance budgeting app for your phone. Track cards, income, and expenses, and see what you can spend."
+        />
+        <link rel="canonical" href="https://balancebox.online/" />
+        <meta property="og:title" content="BalanceBox — free finance budgeting app" />
+        <meta
+            property="og:description"
+            content="A free budgeting app for your cards, income, and expenses."
+        />
+        <meta property="og:url" content="https://balancebox.online/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://balancebox.online/logo2.png" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="BalanceBox — free finance budgeting app" />
+        <meta
+            name="twitter:description"
+            content="A free budgeting app for your cards, income, and expenses."
+        />
+        <meta name="twitter:image" content="https://balancebox.online/logo2.png" />
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "BalanceBox",
+                "applicationCategory": "FinanceApplication",
+                "operatingSystem": "Web",
+                "url": "https://balancebox.online/",
+                "description": "BalanceBox is a free finance budgeting app for tracking cards, income, and expenses.",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            }
+        </script>
     </head>
     <body>
         <div id="root"></div>

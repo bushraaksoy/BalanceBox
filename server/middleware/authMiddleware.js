@@ -34,6 +34,15 @@ export const authenticateUserId = async (req, res, next) => {
                 .send({ message: 'Invalid user-id. User not found.' });
         }
         req.userId = userId;
+        const seen = user.lastSeenAt ? new Date(user.lastSeenAt).getTime() : 0;
+        if (Date.now() - seen > 15 * 60 * 1000) {
+            prisma.user
+                .update({
+                    where: { id: userId },
+                    data: { lastSeenAt: new Date() },
+                })
+                .catch((updateError) => console.log(updateError));
+        }
         next();
     } catch (error) {
         console.log(error);

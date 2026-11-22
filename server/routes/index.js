@@ -11,6 +11,8 @@ import analyticsRouter from './AnalyticsRouter.js';
 import cardRouter from './CardRouter.js';
 import documentRouter from './DocumentRouter.js';
 import chatRouter from './ChatRouter.js';
+import statsRouter from './StatsRouter.js';
+import adminRouter from './AdminRouter.js';
 
 const router = Router();
 
@@ -30,5 +32,7 @@ router.use('/analytics', analyticsRouter);
 router.use('/cards', cardRouter);
 router.use('/document', documentRouter);
 router.use('/chat', chatRouter);
+router.use('/stats', statsRouter);
+router.use('/admin', adminRouter);
 
 export default router;

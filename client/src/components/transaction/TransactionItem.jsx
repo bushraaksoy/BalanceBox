@@ -29,7 +29,7 @@ const TransactionItem = ({ transaction }) => {
                     }
                 >
                     {transaction.type == 'INCOME' ? '+ ' : '- '}
-                    <Currency /> {transaction.amount}
+                    <Currency /> {Number(transaction.amount).toLocaleString()}
                 </div>
                 <div className="text-xs text-gray-500 ">
                     {transaction.card?.title}

@@ -36,6 +36,7 @@ analyticsRouter.get(
 );
 analyticsRouter.get(
     '/budget-remainder',
+    authenticateUserId,
     AnalyticsController.getBudgetRemainder
 );
 analyticsRouter.get(

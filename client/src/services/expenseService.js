@@ -2,9 +2,11 @@ import axios from 'axios';
 
 const base_url = import.meta.env.VITE_APP_API_BASE_URL;
 
-export const getExpenseCategory = async (userId) => {
+export const getExpenseCategory = async (userId, month) => {
     try {
-        const url = `${base_url}/expenses`;
+        const url = month
+            ? `${base_url}/expenses?month=${month}`
+            : `${base_url}/expenses`;
         const res = await axios.get(url, { headers: { 'user-id': userId } });
         console.log(res.data);
         return res.data;

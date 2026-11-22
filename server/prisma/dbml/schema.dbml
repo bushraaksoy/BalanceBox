@@ -11,6 +11,8 @@ Table User {
   avatar String
   dob DateTime
   gender String
+  isAdmin Boolean [not null, default: false]
+  lastSeenAt DateTime
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   incomes Income [not null]
@@ -131,6 +133,20 @@ Table ChatSession {
   user User
   createdAt DateTime [default: `now()`, not null]
   messages Message [not null]
+}
+
+Table Visit {
+  id String [pk]
+  visitorId String [not null]
+  userId String
+  type String [not null]
+  path String
+  country String
+  timezone String
+  language String
+  referrer String
+  device String
+  createdAt DateTime [default: `now()`, not null]
 }
 
 Table Message {

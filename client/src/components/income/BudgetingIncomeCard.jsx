@@ -3,26 +3,36 @@ import { LuArrowDownLeft } from 'react-icons/lu';
 import Currency from '../Currency';
 import Amount from '../ui/Amount';
 
-const BudgetingIncomeCard = ({ amount, title, card }) => {
+const pretty = (value) => {
+    if (!value) return '';
+    const text = String(value).toLowerCase().replaceAll('_', ' ');
+    return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
+const BudgetingIncomeCard = ({ amount, title, category, frequency }) => {
     return (
-        <div className="expense-item w-full rounded-xl py-1.5 flex justify-between items-center text-sm">
-            <div className="flex gap-2 items-center">
-                <div className="p-1.5 bg-gray-200 rounded-md">
+        <div className="flex w-full items-center justify-between gap-3 border-b border-[#E8E9ED] py-3 text-sm last:border-0">
+            <div className="flex min-w-0 items-center gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
                     <LuArrowDownLeft size={16} />
                 </div>
-                <div className="flex flex-col justify-center">
-                    <h3 className="font-medium leading-5">{title}</h3>
-                    <span className="text-xs text-gray-500">{card}</span>
+                <div className="min-w-0">
+                    <h3 className="truncate font-medium leading-5 text-[#171717]">
+                        {title}
+                    </h3>
+                    {category && (
+                        <p className="text-xs text-[#737987]">{pretty(category)}</p>
+                    )}
                 </div>
             </div>
-            <div className="flex items-center gap-2">
-                <div>
-                    <span>
-                        <Currency />
-                    </span>
+            <div className="shrink-0 text-right">
+                <div className="font-medium text-[#171717]">
+                    <Currency />
                     <Amount amount={amount} />
-                    <span className="text-gray-500 text-xs">/month</span>
                 </div>
+                {frequency && (
+                    <p className="text-xs text-[#737987]">{pretty(frequency)}</p>
+                )}
             </div>
         </div>
     );

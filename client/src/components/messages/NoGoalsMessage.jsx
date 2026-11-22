@@ -6,7 +6,7 @@ import { PiPiggyBankFill } from 'react-icons/pi';
 const NoGoalsMessage = () => {
     return (
         <div className="flex flex-col gap-2 items-center py-6">
-            <FaPiggyBank color="salmon" size={26} />
+            <FaPiggyBank className="text-[#E6B33D]" size={26} />
             <h1 className="text-base font-medium">No Saving Goals Yet</h1>
             <div className="text-gray-500 text-center">
                 <p className="">You don't have any saving goals</p>

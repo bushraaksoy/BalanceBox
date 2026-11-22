@@ -1,16 +1,28 @@
 import React from 'react';
+import { LuLandmark } from 'react-icons/lu';
 import Currency from '../Currency';
 import Amount from '../ui/Amount';
 
-const Card = ({ title, balance }) => {
+const Card = ({ title, balance, hidden }) => {
     return (
-        <div className="w-40 h-30 bg-gradient-to-br from-yellow-200 to-yellow-500 flex-shrink-0 font-semibold flex flex-col  justify-between px-4 py-5 rounded-2xl text-stone-800 shadow-md">
-            <h1 className=" font-medium text-sm text-right">{title}</h1>
-            <div className="text-start">
-                <p className="text-xs font-light font-gray-700">Balance</p>
-                <div className="text-gray-500 font-medium text-lg">
-                    <Currency />
-                    <Amount amount={balance} />
+        <div className="flex h-28 w-44 flex-shrink-0 flex-col justify-between rounded-2xl bg-gradient-to-br from-[#F5D36B] to-[#E6B33D] px-4 py-4 text-[#171717] shadow-sm">
+            <div className="flex items-center justify-between gap-2">
+                <h1 className="truncate text-left text-sm font-medium">{title}</h1>
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/50">
+                    <LuLandmark size={14} />
+                </span>
+            </div>
+            <div className="text-left">
+                <p className="text-xs text-[#171717]/70">Balance</p>
+                <div className="text-lg font-semibold">
+                    {hidden ? (
+                        '••••'
+                    ) : (
+                        <>
+                            <Currency />
+                            <Amount amount={balance} />
+                        </>
+                    )}
                 </div>
             </div>
         </div>
@@ -18,14 +30,3 @@ const Card = ({ title, balance }) => {
 };
 
 export default Card;
-
-// const Card = ({ title, balance }) => {
-//     return (
-//         <div className="w-56 h-34 flex-shrink-0 p-4 py-6 bg-gradient-to-br from-yellow-200 to-yellow-500 rounded-2xl flex flex-col justify-between text-stone-800 shadow-md">
-//             <h1 className="text-gray-800 font-medium">{title}</h1>
-//             <div className="text-3xl font-medium text-stone-700">
-//                 <Currency/> {balance}
-//             </div>
-//         </div>
-//     );
-// };

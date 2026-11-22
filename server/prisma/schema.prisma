@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator dbml {
@@ -56,6 +57,8 @@ model User {
   avatar             String?
   dob                DateTime?
   gender             String?
+  isAdmin            Boolean              @default(false)
+  lastSeenAt         DateTime?
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
   incomes            Income[]
@@ -195,6 +198,23 @@ enum MessageType {
   regular
   userData
   insight
+}
+
+model Visit {
+  id        String   @id @default(uuid())
+  visitorId String
+  userId    String?
+  type      String
+  path      String?
+  country   String?
+  timezone  String?
+  language  String?
+  referrer  String?
+  device    String?
+  createdAt DateTime @default(now())
+
+  @@index([type, createdAt])
+  @@index([visitorId, type, createdAt])
 }
 
 model Message {

@@ -12,7 +12,7 @@ import SimpleLoading from '../skeletons/SimpleLoading';
 const Login = () => {
     const [formData, setFormData] = useState({});
     const [error, setErrors] = useState('');
-    const { setUserId } = useAuthContext();
+    const { setUserId, setIsAdmin } = useAuthContext();
     const navigate = useNavigate();
 
     const { mutate, isLoading } = useMutation({
@@ -21,6 +21,7 @@ const Login = () => {
             console.log('success');
             console.log(data);
             setUserId(data.userId);
+            setIsAdmin(data.isAdmin ? 'true' : 'false');
             toast.success('Logged in successfully!');
             navigate('/');
         },

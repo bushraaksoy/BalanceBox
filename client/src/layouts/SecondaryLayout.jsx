@@ -2,14 +2,18 @@ import React from 'react';
 import BottomNavBar from '../components/appBars/BottomNavBar';
 import Heading from '../components/ui/Heading';
 
-const SecondaryLayout = ({ children, heading }) => {
+const SecondaryLayout = ({ children, heading, contentClassName = 'bg-white' }) => {
     return (
         <div className="app bg-gray-50">
-            <div className="flex flex-col justify-between h-full">
-                <div className="subpage-layout-content bg-white h-full overflow-y-scroll pb-36">
+            <div className="relative flex h-full min-h-0 flex-col">
+                <header className={`shrink-0 ${contentClassName}`}>
                     <Heading>
-                        <div className="flex items-center gap-2 p-5">{heading}</div>
+                        <div className="flex items-center gap-2 px-5">{heading}</div>
                     </Heading>
+                </header>
+                <div
+                    className={`subpage-layout-content min-h-0 flex-1 overflow-y-auto overscroll-none pb-28 ${contentClassName}`}
+                >
                     {children}
                 </div>
                 <BottomNavBar />

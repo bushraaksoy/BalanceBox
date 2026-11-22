@@ -22,7 +22,14 @@ export const expenseCategoryIcons = {
     HOUSING: <GiHouse size={20} className="" />,
     TRANSPORT: <MdEmojiTransportation size={20} />,
     HEALTH: <FaHeartPulse />,
-    GROCERIES: <img src={GroceriesIcon} width={20} height={20} />,
+    GROCERIES: (
+        <img
+            src={GroceriesIcon}
+            width={20}
+            height={20}
+            className="dark:brightness-0 dark:invert"
+        />
+    ),
     SHOPPING: <BiSolidShoppingBags size={20} />,
     ENTERTAINMENT: <GiClapperboard size={20} />,
     SUBSCRIPTION: <FaCalendarCheck size={20} />,

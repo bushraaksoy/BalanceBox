@@ -9,7 +9,7 @@ const UserProfileCard = ({ profile }) => {
     return (
         <Link
             to="/edit-profile"
-            className="flex items-center gap-3 bg-gray-50 rounded-2xl px-4 py-3 border border-gray-200"
+            className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3 border border-gray-200"
         >
             <UserAvatar name={name} size="sm" />
             <div className="flex flex-col min-w-0 flex-1">

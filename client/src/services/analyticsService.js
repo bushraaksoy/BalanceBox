@@ -2,9 +2,11 @@ import axios from 'axios';
 
 const base_url = import.meta.env.VITE_APP_API_BASE_URL;
 
-export const getBalanceOverview = async (userId) => {
+export const getBalanceOverview = async (userId, month) => {
     try {
-        const url = `${base_url}/analytics/balance-overview`;
+        const url = month
+            ? `${base_url}/analytics/balance-overview?month=${month}`
+            : `${base_url}/analytics/balance-overview`;
         const res = await axios.get(url, { headers: { 'user-id': userId } });
         console.log('balance overview for current month: ', res.data);
         return res.data;

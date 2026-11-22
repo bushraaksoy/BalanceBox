@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import FullLogo from '../components/FullLogo';
+import { trackEvent } from '../services/statsService';
 
 const points = [
     {
@@ -45,6 +46,10 @@ const Landing = () => {
     const [steps, setSteps] = useState([]);
 
     useEffect(() => {
+        trackEvent('landing_view');
+    }, []);
+
+    useEffect(() => {
         if (!installOpen) return undefined;
         const onKey = (event) => {
             if (event.key === 'Escape') setInstallOpen(false);
@@ -56,6 +61,7 @@ const Landing = () => {
     const openInstall = () => {
         setSteps(installSteps());
         setInstallOpen(true);
+        trackEvent('install_prompt');
     };
 
     return (
@@ -86,14 +92,14 @@ const Landing = () => {
             <main className="flex-1">
                 <section className="max-w-2xl mx-auto px-6 pt-14 sm:pt-16 pb-12 text-center">
                     <p className="text-sm font-medium text-stone-500">
-                        Personal finance
+                        Free finance budgeting app
                     </p>
                     <h1 className="mt-3 text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05]">
                         Know what you can spend.
                     </h1>
                     <p className="mt-5 text-lg text-stone-500">
-                        BalanceBox keeps your cards, income, and expenses in
-                        one quiet place.
+                        BalanceBox is a free budgeting app for your cards,
+                        income, and expenses.
                     </p>
                     <div className="mt-8 flex items-center justify-center gap-3">
                         <Link

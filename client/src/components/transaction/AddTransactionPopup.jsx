@@ -1,149 +1,209 @@
-import React, { useState } from 'react';
-import Popup from '../Popup';
-import { IoIosAdd } from 'react-icons/io';
+import { useState } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
-import { addExpenseTransaction } from '../../services/transactionService';
+import { usePreferences } from '../../context/PreferencesContext';
+import {
+    addExpenseTransaction,
+    deleteTransaction,
+} from '../../services/transactionService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { getCards } from '../../services/cardService';
 import ButtonLoader from '../ButtonLoader';
 import Currency from '../Currency';
-import { IoChevronDown } from 'react-icons/io5';
+import { IoChevronDown, IoClose } from 'react-icons/io5';
+
+const fieldClass =
+    'w-full rounded-xl border border-[#E8E9ED] bg-[#F8F9FB] px-3 py-2.5 text-sm text-[#171717] outline-none';
+
+const refreshActivity = (queryClient) => {
+    queryClient.invalidateQueries({ queryKey: ['expenseCategory'] });
+    queryClient.invalidateQueries({ queryKey: ['balanceOverview'] });
+    queryClient.invalidateQueries({ queryKey: ['currentBalance'] });
+    queryClient.invalidateQueries({ queryKey: ['cards'] });
+    queryClient.invalidateQueries({ queryKey: ['transactions'] });
+};
 
 const AddTransactionPopup = ({ visible, setVisible, expense }) => {
-    console.log(expense);
     const { userId } = useAuthContext();
+    const { symbol } = usePreferences();
     const [formData, setFormData] = useState({});
+    const [error, setError] = useState('');
     const queryClient = useQueryClient();
 
-    const { data: cards, isLoadig } = useQuery({
+    const { data: cards, isLoading: cardsLoading } = useQuery({
         queryFn: () => getCards(userId),
         queryKey: ['cards'],
+        enabled: visible,
     });
 
-    const { mutate: addTransactionMutation, isAddLoading } = useMutation({
+    const { mutate: addTransactionMutation, isPending } = useMutation({
         mutationFn: (payload) => addExpenseTransaction(userId, payload),
         onSuccess: (data) => {
-            toast.success('Transaction added!');
-            console.log('Transaction added successfully:', data);
-            clearForm();
+            const transactionId = data?.expenseTransaction?.id;
+            toast.success('Expense logged', {
+                action: transactionId
+                    ? {
+                          label: 'Undo',
+                          onClick: () => undo(transactionId),
+                      }
+                    : undefined,
+            });
+            setFormData({});
+            setError('');
             setVisible(false);
-            queryClient.invalidateQueries([
-                'expenseCategory',
-                'balanceOverview',
-                'transactions',
-                'cardsDetails',
-            ]);
+            refreshActivity(queryClient);
         },
-        onError: (error) => {
-            console.error('Error adding income:', error);
+        onError: (requestError) => {
+            setError(requestError.message || 'Could not log this expense');
         },
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-        console.log(formData);
+    const undo = async (transactionId) => {
+        try {
+            await deleteTransaction(userId, transactionId);
+            toast.success('Expense removed');
+            refreshActivity(queryClient);
+        } catch (requestError) {
+            toast.error(requestError.message || 'Could not undo that expense');
+        }
     };
 
-    const clearForm = () => {
-        setFormData({});
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        const nextValue =
+            name === 'amount'
+                ? value
+                      .replace(/[^\d.]/g, '')
+                      .replace(/^(\d*\.?\d{0,2}).*$/, '$1')
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                : value;
+        setFormData({ ...formData, [name]: nextValue });
+        setError('');
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const payload = {
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const amount = Number(String(formData.amount || '').replace(/,/g, ''));
+        const card = cards?.find((item) => String(item.id) === String(formData.cardId));
+
+        if (!formData.cardId) {
+            setError('Select the card you paid with.');
+            return;
+        }
+        if (!Number.isFinite(amount) || amount <= 0) {
+            setError('Enter an amount greater than zero.');
+            return;
+        }
+        if (card && amount > card.balance) {
+            setError(`${card.title} does not have enough balance.`);
+            return;
+        }
+
+        addTransactionMutation({
             ...formData,
+            amount,
             expenseId: expense.id,
-        };
-        setFormData(payload);
-        addTransactionMutation(payload);
+        });
     };
 
-    const fieldClass =
-        'w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm outline-none';
+    if (!visible) return null;
 
     return (
-        <Popup visible={visible} setVisible={setVisible}>
-            <h1 className="font-semibold tracking-tight text-center">
-                Add {expense?.title} spending
-            </h1>
+        <div
+            className="fixed inset-0 z-40 flex items-end bg-black/30"
+            onClick={() => setVisible(false)}
+        >
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-3 w-full text-left"
+                onClick={(event) => event.stopPropagation()}
+                className="w-full rounded-t-3xl bg-white px-5 pt-3 pb-8 text-[#171717]"
             >
-                {cards?.length > 0 && (
+                <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-[#E8E9ED]" />
+                <div className="mb-4 flex items-start justify-between gap-3">
+                    <div>
+                        <p className="text-xs text-[#737987]">Log expense</p>
+                        <h2 className="text-lg font-semibold">{expense?.title}</h2>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={() => setVisible(false)}
+                        aria-label="Close"
+                        className="text-[#737987]"
+                    >
+                        <IoClose size={22} />
+                    </button>
+                </div>
+
+                <div className="flex flex-col gap-3">
                     <label className="block">
-                        <span className="text-xs text-stone-500">Card</span>
+                        <span className="text-xs text-[#737987]">Amount</span>
+                        <div className="relative mt-1">
+                            <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-sm text-[#737987]">
+                                <Currency />
+                            </span>
+                            <input
+                                className={`${fieldClass} pl-8`}
+                                inputMode="decimal"
+                                name="amount"
+                                value={formData.amount || ''}
+                                onChange={handleChange}
+                                placeholder="0"
+                            />
+                        </div>
+                    </label>
+
+                    <label className="block">
+                        <span className="text-xs text-[#737987]">Card</span>
                         <div className="relative mt-1">
                             <select
-                                required
                                 name="cardId"
                                 value={formData.cardId || ''}
                                 onChange={handleChange}
                                 className={`${fieldClass} appearance-none pr-8`}
                             >
                                 <option value="">Select a card</option>
-                                {cards.map((card) => (
+                                {cards?.map((card) => (
                                     <option key={card.id} value={card.id}>
-                                        {card.title}
+                                        {card.title} · {card.balance?.toLocaleString()} {symbol}
                                     </option>
                                 ))}
                             </select>
                             <IoChevronDown
-                                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-stone-400"
+                                className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[#737987]"
                                 size={16}
                             />
                         </div>
                     </label>
-                )}
 
-                <label className="block">
-                    <span className="text-xs text-stone-500">Description</span>
-                    <input
-                        className={`${fieldClass} mt-1`}
-                        type="text"
-                        name="title"
-                        value={formData.title || ''}
-                        onChange={handleChange}
-                        placeholder="Optional"
-                    />
-                </label>
-
-                <label className="block">
-                    <span className="text-xs text-stone-500">Amount</span>
-                    <div className="relative mt-1">
-                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-stone-500">
-                            <Currency />
-                        </span>
+                    <label className="block">
+                        <span className="text-xs text-[#737987]">Note</span>
                         <input
-                            className={`${fieldClass} pl-8`}
-                            required
-                            type="number"
-                            step="0.001"
-                            min="0"
-                            name="amount"
-                            value={formData.amount || ''}
+                            className={`${fieldClass} mt-1`}
+                            type="text"
+                            name="title"
+                            value={formData.title || ''}
                             onChange={handleChange}
-                            placeholder="0"
+                            placeholder="Optional"
                         />
-                    </div>
-                </label>
-                <button
-                    disabled={isAddLoading || isLoadig}
-                    type="submit"
-                    className="w-full bg-yellow-500 mt-1 py-2.5 rounded-full font-medium flex items-center justify-center"
-                >
-                    {isAddLoading ? (
-                        <ButtonLoader />
-                    ) : (
-                        <>
-                            <IoIosAdd size={22} /> Add
-                        </>
+                    </label>
+
+                    {error && <p className="text-sm text-[#b42323]">{error}</p>}
+
+                    <button
+                        disabled={isPending || cardsLoading || !cards?.length}
+                        type="submit"
+                        className="mt-1 flex w-full items-center justify-center rounded-full bg-[#E6B33D] py-3 font-medium text-[#171717] disabled:opacity-60"
+                    >
+                        {isPending ? <ButtonLoader /> : 'Log expense'}
+                    </button>
+                    {!cardsLoading && !cards?.length && (
+                        <p className="text-center text-xs text-[#737987]">
+                            Add a card before logging an expense.
+                        </p>
                     )}
-                </button>
+                </div>
             </form>
-        </Popup>
+        </div>
     );
 };
 
